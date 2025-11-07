@@ -23,6 +23,9 @@ importers:
       hexo-generator-tag:
         specifier: ^2.0.0
         version: 2.0.0
+      hexo-githubcalendar:
+        specifier: ^1.2.3
+        version: 1.2.3
       hexo-renderer-ejs:
         specifier: ^2.0.0
         version: 2.0.0
@@ -412,6 +415,9 @@ packages:
   hexo-generator-tag@2.0.0:
     resolution: {integrity: sha512-1px/hF3veEohWDN8jjzchQhaiz+uOStUvvMaBJC9vWOlALh30UFcapL8IrvAwwJZjFRVA+WqGgDRqoQ8+yaaFw==}
     engines: {node: '>=14'}
+
+  hexo-githubcalendar@1.2.3:
+    resolution: {integrity: sha512-xMfp2Z11F57s0/q7N9x+S2ui5dkrOiz5I3+TKPL+2IquWKj11wpaVZsPDgMxPAU8B6AYm/78S5e2APiHADPYSg==}
 
   hexo-i18n@2.0.0:
     resolution: {integrity: sha512-dkUXecEtChaQMdTHN4WR13c8GwKqjbSOZPJS9qDqV6Ebnb77Wa/nQzWFckhP0dCps3a9lUQBd8hYGOMbOosiQQ==}
@@ -1312,6 +1318,8 @@ snapshots:
   hexo-generator-tag@2.0.0:
     dependencies:
       hexo-pagination: 3.0.0
+
+  hexo-githubcalendar@1.2.3: {}
 
   hexo-i18n@2.0.0:
     dependencies:
