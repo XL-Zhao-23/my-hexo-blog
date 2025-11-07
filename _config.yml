@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 'ZXL's Tech Blog'
-subtitle: 'Time is golden'
-description: '一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟'
+title: "ZXL's Tech Blog"
+subtitle: "Time is golden"
+description: "一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟"
 keywords:
 author: XL Zhao
 language: zh-CN
@@ -103,7 +103,7 @@ theme: landscape
 deploy:
   type: ''
 
-#next
+# next
 githubcalendar:
   enable: true
   priority: 3
