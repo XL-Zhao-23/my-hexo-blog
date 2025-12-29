@@ -995,3 +995,8 @@ vendors:
 css: css
 js: js
 images: images
+
+deploy:
+  type: git
+  repo: https://github.com/XL-Zhao-23/my-hexo-blog.git
+  branch: main
