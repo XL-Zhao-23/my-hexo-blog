@@ -996,13 +996,6 @@ css: css
 js: js
 images: images
 
-deploy:
-  type: git
-  repo: https://github.com/XL-Zhao-23/my-hexo-blog.git
-  branch: main
+
   
 
-index_generator:
-  path: ''
-  per_page: 1
-  order_by: -date
