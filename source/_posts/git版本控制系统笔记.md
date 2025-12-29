@@ -266,7 +266,7 @@ git pull 报的合并冲突，其实就是merge的
 
 情况1 ：master 有3个提交C0，C1，C2，此时新建一个分支iss53，ss53指向C2，然后iss53更新，提交C3，iss53指向C3
 
-![img](git版本控制系统笔记.assets/图片.png)
+![img](图片.png)
 
 情况1下merge，就只需要将master移动到c3
 
@@ -276,11 +276,11 @@ git pull 报的合并冲突，其实就是merge的
 
 情况2：在情况1的基础上，maste分支有新的提交C4
 
-![img](git版本控制系统笔记.assets/图片.png)
+![img](图片.png)
 
 这种情况下合并，就需要创建一个新的提交C6，用来记录如何合并C2版本和C3版本，master移动到C6
 
-![img](git版本控制系统笔记.assets/图片.png)
+![img](图片.png)
 
 #### 3.3.2. Rebase
 
@@ -290,7 +290,7 @@ git pull 报的合并冲突，其实就是merge的
 
 ##### 3.3.2.1. 情况1：`git rebase 新基底`
 
-![img](git版本控制系统笔记.assets/图片.png)
+![img](图片.png)
 
 ```git
 $ git checkout experiment
@@ -299,34 +299,34 @@ First, rewinding head to replay your work on top of it...
 Applying: added staged command
 ```
 
-![img](git版本控制系统笔记.assets/图片.png)
+![img](图片.png)
 
 ```plain
 $ git checkout master
 $ git merge experiment
 ```
 
-![img](git版本控制系统笔记.assets/图片-1766997110841.png)
+![img](图片-1766997110841.png)
 
 ##### 3.3.2.2. 情况2：`git rebase --onto 新基底 老基底 分支` = “把分支上不在老基底的提交摘下来，放到新基底上”  
 
-![img](git版本控制系统笔记.assets/图片-1766997110907.png)
+![img](图片-1766997110907.png)
 
 git rebase --onto client server master
 
-![img](git版本控制系统笔记.assets/图片-1766997110985.png)
+![img](图片-1766997110985.png)
 
 git checkout master
 
 git merge client
 
-![img](git版本控制系统笔记.assets/图片-1766997111052.png)
+![img](图片-1766997111052.png)
 
 ##### 3.3.2.3. 情况3：git rebase 新基底 分支
 
 git rebase master server
 
-![img](git版本控制系统笔记.assets/图片-1766997111131.png)
+![img](图片-1766997111131.png)
 
 git checkout master
 
@@ -336,13 +336,13 @@ git branch -d client
 
 git branch -d server
 
-![img](git版本控制系统笔记.assets/图片-1766997111207.png)
+![img](图片-1766997111207.png)
 
 ##### 3.3.2.4. rebase 的风险
 
  不要对已经存在于仓库之外、且其他人可能基于其进行开发的提交执行 rebase。  
 
-![img](git版本控制系统笔记.assets/图片-1766997111278.png)
+![img](图片-1766997111278.png)
 
 如何解决：用rebase解决rebase
 
