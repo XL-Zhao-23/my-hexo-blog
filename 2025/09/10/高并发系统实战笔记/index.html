@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xl-zhao-23.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第一章 概述1. 概述互联网服务的价值在于高流量，高流量带来平台的成长和可能性，而高流量就带来了高并发 1.1. 成长路径 CRUD Boy：代码可复用性，业务逻辑组合 进阶选手：开源资料，技术图书 黄金成长期：主持高并发改造，活跃于技术社区等 实力战将….. 我应该是出于1和2这两个阶段中，实际工作是做CRUD，然后学习是通过开源资料。下一步要走入3，就需要在开源社区或者公司中接触高并发系统，进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发系统实战笔记">
+<meta property="og:url" content="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="ZXL&#39;s Tech Blog">
+<meta property="og:description" content="第一章 概述1. 概述互联网服务的价值在于高流量，高流量带来平台的成长和可能性，而高流量就带来了高并发 1.1. 成长路径 CRUD Boy：代码可复用性，业务逻辑组合 进阶选手：开源资料，技术图书 黄金成长期：主持高并发改造，活跃于技术社区等 实力战将….. 我应该是出于1和2这两个阶段中，实际工作是做CRUD，然后学习是通过开源资料。下一步要走入3，就需要在开源社区或者公司中接触高并发系统，进">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/96025be4df7a427fa94b04f162d60e5d.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/42b0531bd31240a899c0ea444957ce09.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/6eafb904cad6468ca54afe6d2f18b343.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/1e9da593231c43dfbe9fa01993d8168b.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ef419bf4830a4b89a7e527419fef789d.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/b8b8b457168241a585b90e812de6e2f1.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ff45dcebabaa4bc398e92b1d3a798e07.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/118be054c09f4c45b2cc384ee004c6ba.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/6904059bbc7948119348337886af4e66.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9a9f4a0dbbf24eb8b17b2b0152b1083e.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9e8e9f13fd214be6a92a875b438aab2f.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/13093c34d9714bb99acd63e638150adf.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/b40311c823c940299e5e7f76f92a1057.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/de414acac59f4476993c2c373ce04584.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/e47b4ad847d147c3a7b108c53675899c.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9d45a60fdff04d6b8c519a415f76106e.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/21014ee39c9947fda82b402560a366c8.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/d951708efd3e4c459e3cd1fec3159a60.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ea13e93dd6384fd1859616ae8835df2c.jpg">
+<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/169a7a7fa5df4f3eaedac9d7b1eca1ea.jpg">
+<meta property="article:published_time" content="2025-09-10T12:04:00.000Z">
+<meta property="article:modified_time" content="2025-12-29T10:06:52.791Z">
+<meta property="article:author" content="XL Zhao">
+<meta property="article:tag" content="强一致性">
+<meta property="article:tag" content="读多写多">
+<meta property="article:tag" content="读多写少">
+<meta property="article:tag" content="读少写多">
+<meta property="article:tag" content="高并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/96025be4df7a427fa94b04f162d60e5d.jpg">
+
+<link rel="canonical" href="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>高并发系统实战笔记 | ZXL's Tech Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZXL's Tech Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Time is golden</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XL Zhao">
+      <meta itemprop="description" content="一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZXL's Tech Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高并发系统实战笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-10 20:04:00" itemprop="dateCreated datePublished" datetime="2025-09-10T20:04:00+08:00">2025-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-12-29 18:06:52" itemprop="dateModified" datetime="2025-12-29T18:06:52+08:00">2025-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88/" itemprop="url" rel="index"><span itemprop="name">软件开发工程师</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>互联网服务的价值在于高流量，高流量带来平台的成长和可能性，而高流量就带来了高并发</p>
+<h3 id="1-1-成长路径"><a href="#1-1-成长路径" class="headerlink" title="1.1. 成长路径"></a>1.1. 成长路径</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/96025be4df7a427fa94b04f162d60e5d.jpg" alt="img"></p>
+<p>CRUD Boy：代码可复用性，业务逻辑组合</p>
+<p>进阶选手：开源资料，技术图书</p>
+<p>黄金成长期：主持高并发改造，活跃于技术社区等</p>
+<p>实力战将…..</p>
+<p><strong>我应该是出于1和2这两个阶段中，实际工作是做CRUD，然后学习是通过开源资料。下一步要走入3，就需要在开源社区或者公司中接触高并发系统，进行锻炼</strong></p>
+<h3 id="1-2-如何实践高并发"><a href="#1-2-如何实践高并发" class="headerlink" title="1.2. 如何实践高并发"></a>1.2. 如何实践高并发</h3><p><strong>步骤：</strong> 识别系统类型、完善监控系统、梳理改造要点、小步改造验证。  </p>
+<h4 id="1-2-1-识别系统类型"><a href="#1-2-1-识别系统类型" class="headerlink" title="1.2.1. 识别系统类型"></a>1.2.1. 识别系统类型</h4><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/42b0531bd31240a899c0ea444957ce09.jpg" alt="img"></p>
+<p>读多写少： 聚焦于如何通过<strong>缓存</strong>分担数据库查询压力，所以我们的学习重点就是做好缓存，包括但不限于数据梳理、做数据缓存、加缓存后保证数据一致性等等工作。  </p>
+<p>强一致性：承接高并发流量的同时，还要做好<strong>系统隔离性、事务一致性以及库存高并发争抢不超卖</strong></p>
+<p>写多读少： 写高并发的服务通常需要借助一些<strong>开源</strong>才能实现  </p>
+<p>读多写多： 这类系统数据基本<strong>都是在内存中直接对外服务</strong>，同时服务都要<strong>拆成很小的单元</strong>，数据是周期落到磁盘或数据库，而不是实时更新到数据库。因此我们的学习重点是如何用内存数据做业务服务、系统无需重启热更新、脚本引擎集成、脚本与服务互动交换数据、直播场景高并发优化、一些关于网络优化CDN和DNS、知识以及业务流量调度、客户端本地缓存等相关知识。  </p>
+<h1 id="第二章-读多写少的系统"><a href="#第二章-读多写少的系统" class="headerlink" title="第二章 读多写少的系统"></a>第二章 读多写少的系统</h1><h2 id="1-结构梳理"><a href="#1-结构梳理" class="headerlink" title="1. 结构梳理"></a>1. 结构梳理</h2><p>读多写少 —&gt; 整理数据，以便于缓存</p>
+<h3 id="1-1-精简字段"><a href="#1-1-精简字段" class="headerlink" title="1.1. 精简字段"></a>1.1. 精简字段</h3><p> 长度小的数据在吞吐、查询、传输上都会很快，也会更好管理和缓存。  </p>
+<p> 表字段如果缺少冗余会导致业务实现更为繁琐  </p>
+<p> “更多的字段”和“更少的职能”之间找到平衡  </p>
+<h3 id="1-2-判断不同种类的表是否适合缓存"><a href="#1-2-判断不同种类的表是否适合缓存" class="headerlink" title="1.2. 判断不同种类的表是否适合缓存"></a>1.2. 判断不同种类的表是否适合缓存</h3><p>实体数据表 通常适合长期缓存</p>
+<p>实体关系表 实体辅助表 比较灵活，可能会判断是否需要缓存</p>
+<p>动作历史表 通常不适合缓存</p>
+<p><strong>原则</strong></p>
+<ul>
+<li>缓存是hash索引，可以提升用ID直接查询的数据的效率， 根据ID能够精准匹配的数据实体很适合做缓存；而通过String、List或Set指令形成的有多条value的结构适合做（1:1、1:n、m:n）辅助或关系查询；最后还有一点要注意，虽然Hash结构很适合做实体表的属性和状态，但是<strong>Hgetall指令性能</strong>并不好，很容易让缓存卡顿，建议不要这样做。</li>
+</ul>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/6eafb904cad6468ca54afe6d2f18b343.jpg" alt="img"></p>
+<ul>
+<li>范围查询、条件查询、统计计算的需要提前算好，定期更新，属于临时缓存</li>
+<li>数据增长量大或者跟设计初衷不一样的表数据，这种不适合、也不建议去做做缓存。</li>
+</ul>
+<h2 id="2-缓存一致性"><a href="#2-缓存一致性" class="headerlink" title="2. 缓存一致性"></a>2. 缓存一致性</h2><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/1e9da593231c43dfbe9fa01993d8168b.jpg" alt="img"></p>
+<h3 id="2-1-临时热点缓存"><a href="#2-1-临时热点缓存" class="headerlink" title="2.1. 临时热点缓存"></a>2.1. 临时热点缓存</h3><p>2000万用户数据，都放到缓存中，不现实</p>
+<p>用临时缓存，放空值，防止缓存穿透</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 尝试从缓存中直接获取用户信息</span></span><br><span class="line">userinfo, err := Redis.Get(<span class="string">&quot;user_info_9527&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//缓存命中找到，直接返回用户信息</span></span><br><span class="line"><span class="keyword">if</span> userinfo != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> userinfo, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//没有命中缓存，从数据库中获取</span></span><br><span class="line">userinfo, err := userInfoModel.GetUserInfoById(<span class="number">9527</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找到用户信息</span></span><br><span class="line"><span class="keyword">if</span> userinfo != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="comment">//将用户信息缓存，并设置TTL超时时间让其60秒后失效</span></span><br><span class="line">  Redis.Set(<span class="string">&quot;user_info_9527&quot;</span>, userinfo, <span class="number">60</span>)</span><br><span class="line">  <span class="keyword">return</span> userinfo, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有找到，放一个空数据进去，短期内不再问数据库</span></span><br><span class="line"><span class="comment">// 可选，这个是用来预防缓存穿透查询攻击的</span></span><br><span class="line">Redis.Set(<span class="string">&quot;user_info_9527&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">30</span>)</span><br><span class="line"><span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-缓存更新"><a href="#2-2-缓存更新" class="headerlink" title="2.2. 缓存更新"></a>2.2. 缓存更新</h3><h4 id="2-2-1-单个实体数据更新"><a href="#2-2-1-单个实体数据更新" class="headerlink" title="2.2.1. 单个实体数据更新"></a>2.2.1. 单个实体数据更新</h4><p>先更后删，也可以用队列通知更新</p>
+<h4 id="2-2-2-关系型或者统计型数据更新"><a href="#2-2-2-关系型或者统计型数据更新" class="headerlink" title="2.2.2. 关系型或者统计型数据更新"></a>2.2.2. 关系型或者统计型数据更新</h4><p>例子：缓存中有user_friend_list_cache_XXXX 表示XXXX的好友信息，好友信息中存着好友的实体信息，当我们在修改一个用户的昵称时，需要删除包含它的缓存。<img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ef419bf4830a4b89a7e527419fef789d.jpg" alt="img"></p>
+<ul>
+<li>人工写逻辑 服务代码中写，耦合性强</li>
+<li>订阅变更后由消息队列处理可以实现解耦</li>
+<li>如果数据更新少，可以给表设置全局版本号，或者是划分范围+局部版本号</li>
+<li>如果涉及到的关联的key包含更新的实体的ID的话，可以方便的删除</li>
+<li>异步脚本遍历数据库刷新所有相关缓存</li>
+</ul>
+<h3 id="2-3-Token-减低身份鉴权的流量压力"><a href="#2-3-Token-减低身份鉴权的流量压力" class="headerlink" title="2.3. Token 减低身份鉴权的流量压力"></a>2.3. Token 减低身份鉴权的流量压力</h3><p><strong>这个例子主要是学习不用缓存查询，而直接从请求中拿到想要的信息</strong></p>
+<p>session方式：所有的请求都需要查询session cache进行鉴权，有性能瓶颈，且容易单点故障</p>
+<p>token方式：在请求中携带token，验证token合法性即可完成鉴权，避免session的问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//header</span></span><br><span class="line"><span class="comment">//加密头</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>, <span class="comment">// 加密算法，注意检测个别攻击会在这里设置为none绕过签名</span></span><br><span class="line">  <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span> <span class="comment">//协议类型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//PAYLOAD</span></span><br><span class="line"><span class="comment">//负载部分，存在JWT标准字段及我们自定义的数据字段</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;userid&quot;</span>: <span class="string">&quot;9527&quot;</span>, <span class="comment">//我们放的一些明文信息，如果涉及敏感信息，建议再次加密</span></span><br><span class="line">  <span class="string">&quot;nickname&quot;</span>: <span class="string">&quot;Rick.Xu&quot;</span>, <span class="comment">// 我们放的一些明文信息，如果涉及隐私，建议再次加密</span></span><br><span class="line">  <span class="string">&quot;iss&quot;</span>: <span class="string">&quot;geekbang&quot;</span>,</span><br><span class="line">  <span class="string">&quot;iat&quot;</span>: <span class="number">1516239022</span>, <span class="comment">//token发放时间</span></span><br><span class="line">  <span class="string">&quot;exp&quot;</span>: <span class="number">1516246222</span>, <span class="comment">//token过期时间</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//签名</span></span><br><span class="line"><span class="comment">//签名用于鉴定上两段内容是否被篡改，如果篡改那么签名会发生变化</span></span><br><span class="line"><span class="comment">//校验时会对不上</span></span><br></pre></td></tr></table></figure>
+
+<p>token的离线和更换</p>
+<p>这个token内部包含过期时间，快过期的token会在客户端自动和服务端通讯更换，这种方式可以大幅提高截取客户端token并伪造用户身份的难度。  </p>
+<p>token过期需要到用户中心更换</p>
+<p>需要两种token：<strong>一种是refresh_token，用于更换access_token，有效期是30天；另一种是access_token，用于保存当前用户信息和权限信息，每隔15分钟更换一次</strong>。如果请求用户中心失败，并且App处于离线状态，只要检测到本地refresh_token没有过期，系统仍可以继续工作，直到refresh_token过期为止，然后提示用户重新登陆。这样即使用户中心坏掉了，业务也能正常运转一段时间。  </p>
+<p>短token 降低token被盗风险</p>
+<p>长token 降低用户中心崩溃带来的客户无法跟换token</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>风险结果</th>
+<th>风险窗口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>短 Token 被盗</strong></td>
+<td>攻击者可以直接访问资源</td>
+<td>仅在短 Token 的有效期内（如 15 分钟）</td>
+</tr>
+<tr>
+<td><strong>长 Token 被盗</strong></td>
+<td>攻击者需要去用户中心换取短 Token；如果用户中心有风控（IP 限制、单设备策略），可以拦截</td>
+<td>风险较低，取决于用户中心安全性</td>
+</tr>
+<tr>
+<td><strong>长 Token + 短 Token 都被盗</strong></td>
+<td>攻击者立刻能用短 Token 访问资源，并在过期后用长 Token 继续刷新</td>
+<td>风险窗口 &#x3D; 长 Token 的有效期，或者直到用户中心吊销它</td>
+</tr>
+<tr>
+<td><strong>长 Token + 短 Token 都被盗 + 用户中心崩溃</strong></td>
+<td>攻击者手上有短 Token 可以继续访问，过期后由于用户中心挂掉，刷新过程也停了。风险窗口 &#x3D; 用户中心恢复之前的时间</td>
+<td>风险时间 &#x3D; 短 Token 的剩余有效期 + 用户中心恢复时间</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-同城双活"><a href="#2-4-同城双活" class="headerlink" title="2.4. 同城双活"></a>2.4. 同城双活</h3><p>防止单机故障，引发的生产事故</p>
+<p>难点：延迟，如何保证双活</p>
+<p>主从同步（单次请求）延迟：</p>
+<ul>
+<li>同机房服务器：0.1 ms</li>
+<li>同城服务器（100公里以内） ：1ms（10倍 同机房）</li>
+<li>北京到上海： 38ms（380倍 同机房）</li>
+<li>北京到广州：53ms（530倍 同机房）</li>
+</ul>
+<p>otter工具</p>
+<p>HttpDNS调度，让一个用户在某一段时间内只在一个机房内活跃，这样可以降低数据冲突的情况  </p>
+<h3 id="2-5-多机房一致性-Raft"><a href="#2-5-多机房一致性-Raft" class="headerlink" title="2.5. 多机房一致性 Raft"></a>2.5. 多机房一致性 Raft</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/b8b8b457168241a585b90e812de6e2f1.jpg" alt="img"></p>
+<h1 id="第三章-强一致性的系统"><a href="#第三章-强一致性的系统" class="headerlink" title="第三章 强一致性的系统"></a>第三章 强一致性的系统</h1><p>强一致性 –&gt; 要用到锁、分布式事务 —&gt;  有较大的性能瓶颈  —-&gt; 系统隔离</p>
+<h2 id="1-领域拆分"><a href="#1-领域拆分" class="headerlink" title="1. 领域拆分"></a>1. 领域拆分</h2><p>随着排期不断调整和新排期的不断加入，订单数据就会持续增加，<strong>一年内订单数据量达到了一亿多条</strong>。因为数据过多、合作周期长，并且包含了售后环节，所以这些数据无法根据时间做归档，导致整个系统变得越来越慢。</p>
+<p>考虑到这是核心业务，如果持续存在问题影响巨大，因此朋友找我取经，请教如何对数据进行分表拆分。但根据我的理解，这<strong>不是分表分库</strong>维护的问题，而是<strong>系统功能设计不合理</strong>导致了系统臃肿。于是经过沟通，我们决定对系统订单系统做一次领域拆分。</p>
+<p><strong>拆分理论</strong></p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ff45dcebabaa4bc398e92b1d3a798e07.jpg" alt="img"></p>
+<p><strong>抽象服务的方法</strong></p>
+<p> 被动拆分法、动态辅助表方式、标准抽象 </p>
+<table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>三层架构（MVC）</th>
+<th>DDD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>分层依据</strong></td>
+<td>技术维度（表现层、逻辑层、数据层）</td>
+<td>业务维度（应用、领域、基础设施）</td>
+</tr>
+<tr>
+<td><strong>业务逻辑位置</strong></td>
+<td>Service 层（容易膨胀）</td>
+<td>领域层（聚合&#x2F;实体&#x2F;领域服务）</td>
+</tr>
+<tr>
+<td><strong>实体模型</strong></td>
+<td>贫血模型（只有数据，没有行为）</td>
+<td>充血模型（有数据+业务方法）</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>业务简单，偏 CRUD，快速开发</td>
+<td>业务复杂，领域知识密集，规则演化频繁</td>
+</tr>
+<tr>
+<td><strong>维护成本</strong></td>
+<td>初期低，后期复杂时 Service 容易失控</td>
+<td>初期学习成本高，后期业务清晰可控</td>
+</tr>
+<tr>
+<td><strong>核心思想</strong></td>
+<td>分清技术层次</td>
+<td>分清业务边界和领域规则</td>
+</tr>
+</tbody></table>
+<h2 id="2-强一致锁"><a href="#2-强一致锁" class="headerlink" title="2. 强一致锁"></a>2. 强一致锁</h2><p>几种加锁的方式</p>
+<p><strong>行锁、互斥锁</strong>：最差的锁，导致串行化</p>
+<p><strong>单个动作</strong></p>
+<p>原子操作、redis中放库存拆分key（数量少的时候导致多次判断）、redis维护令牌队列</p>
+<p><strong>多个动作</strong></p>
+<p>自旋互斥超时锁（redis set nx）、CAS乐观锁、lua脚本</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开启事务</span></span><br><span class="line">redis&gt; multi</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="comment">// watch 修改值</span></span><br><span class="line"><span class="comment">// 在exec期间如果出现其他线程修改，那么会自动失败回滚执行discard</span></span><br><span class="line">redis&gt; watch prod_1475_stock_queue prod_1475_stock_1</span><br><span class="line"></span><br><span class="line"><span class="comment">//事务内对数据进行操作</span></span><br><span class="line">redis&gt; rpop prod_1475_stock_queue <span class="number">1</span></span><br><span class="line">QUEUED</span><br><span class="line"></span><br><span class="line"><span class="comment">//操作步骤2</span></span><br><span class="line">redis&gt; decr prod_1475_stock_1</span><br><span class="line">QUEUED</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行之前所有操作步骤</span></span><br><span class="line"><span class="comment">//multi 期间 watch有数值有变化则会回滚</span></span><br><span class="line">redis&gt; exec</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/118be054c09f4c45b2cc384ee004c6ba.jpg" alt="img"></p>
+<h2 id="3-系统隔离"><a href="#3-系统隔离" class="headerlink" title="3. 系统隔离"></a>3. 系统隔离</h2><h3 id="3-1-网关"><a href="#3-1-网关" class="headerlink" title="3.1. 网关"></a>3.1. 网关</h3><p>作用</p>
+<ul>
+<li><strong>外网网关是对外的“城门口守卫”</strong>，防坏人、管流量。</li>
+<li><strong>内网网关是对内的“交通枢纽”</strong>，管车流、调度路线。</li>
+</ul>
+<p>例子：</p>
+<p><strong>外网网关</strong>：Spring Cloud Gateway，处理所有外部请求。</p>
+<ul>
+<li><code>/api/order/**</code> → 转发到订单服务。</li>
+<li><code>/api/user/**</code> → 转发到用户服务。</li>
+</ul>
+<p><strong>内网网关</strong>：微服务之间通过 <strong>Feign + 内网网关</strong> 调用，</p>
+<ul>
+<li>订单服务 → 内网网关 → 用户服务。</li>
+<li>内网网关做负载均衡（调用不同实例）、熔断（Hystrix&#x2F;Resilience4j）。</li>
+</ul>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/6904059bbc7948119348337886af4e66.jpg" alt="img"></p>
+<p>1️⃣ <strong>外网请求访问</strong></p>
+<p>用户在浏览器下单：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户浏览器 → 外网网关 → 外网订单服务 → 数据库</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>外网网关</strong>：做 HTTPS、鉴权、限流、防爬虫</li>
+<li><strong>外网订单服务</strong>：处理订单逻辑</li>
+<li><strong>数据库</strong>：存储订单信息</li>
+</ul>
+<hr>
+<p>2️⃣ <strong>内网访问</strong></p>
+<p>假设内网风控系统要校验订单风险：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外网订单服务 → 内网网关 → 风控服务</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>外网不能直接调用风控服务，只能通过 <strong>内网网关</strong></li>
+<li>内网网关做安全控制、路由、熔断</li>
+</ul>
+<hr>
+<p>3️⃣ <strong>数据同步到内网（异步 Kafka）</strong></p>
+<ul>
+<li>外网订单服务下单成功后，不直接写内网数据库，而是发送事件到 Kafka：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外网订单服务 → Kafka Topic（order_created） → 内网清算/风控/数据分析服务订阅</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>内网服务根据事件更新自己的数据库</li>
+<li>异步机制避免高峰期直接打内网数据库，保证稳定性</li>
+</ul>
+<p>4️⃣ <strong>各系统独立</strong></p>
+<ul>
+<li>外网服务、内网服务都在 <strong>独立集群</strong></li>
+<li>每个服务有自己的数据库、网关</li>
+<li>即使外网流量很高，也不会直接压到内网服务</li>
+</ul>
+<h3 id="3-2-网关隔离和随时熔断"><a href="#3-2-网关隔离和随时熔断" class="headerlink" title="3.2. 网关隔离和随时熔断"></a>3.2. 网关隔离和随时熔断</h3><p><strong>熔断的核心目的是 保护整个系统的可用性，而不是停掉服务。</strong></p>
+<ul>
+<li><strong>阻止请求打垮下游</strong></li>
+<li><strong>提供降级方案保证部分功能可用</strong></li>
+<li><strong>给下游恢复时间</strong></li>
+</ul>
+<p><strong>例子：</strong></p>
+<ul>
+<li><p><strong>拒绝请求调用库存服务</strong></p>
+</li>
+<li><p><strong>快速返回降级结果</strong>，比如：</p>
+</li>
+<li><ul>
+<li>返回默认库存值</li>
+<li>返回缓存库存</li>
+<li>返回友好提示：“库存服务暂不可用”</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-3-减少内网API互动"><a href="#3-3-减少内网API互动" class="headerlink" title="3.3. 减少内网API互动"></a>3.3. 减少内网API互动</h3><p> 为了防止共享的数据被多个系统同时修改，我们会在活动期间把参与活动的数据和库存做推送，然后自动锁定，这样做可以防止其他业务和后台对数据做修改。若要禁售，则可以通过后台直接调用前台业务接口来操作；活动期间也可以添加新的商品到外网业务中，但只能增不能减。  </p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9a9f4a0dbbf24eb8b17b2b0152b1083e.jpg" alt="img"></p>
+<p> 我们需要把活动交易结果同步回内网，而同步期间外网还是能继续交易的。如果不保持锁定，数据的流向不小心会成为双向同步，这种双向同步很容易出现混乱，系统要是因此出现问题就很难修复 。</p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9e8e9f13fd214be6a92a875b438aab2f.jpg" alt="img"></p>
+<h3 id="3-4-分布式队列控流和离线同步"><a href="#3-4-分布式队列控流和离线同步" class="headerlink" title="3.4. 分布式队列控流和离线同步"></a>3.4. 分布式队列控流和离线同步</h3><ul>
+<li>队列拥有良好吞吐并且能够<strong>动态扩容</strong>，可应对各种流量冲击场景；</li>
+<li>可通过动态控制内网消费线程数，从而实现<strong>内网流量可控；</strong></li>
+<li>内网消费服务在高峰期可以<strong>暂时离线</strong>，内网服务可以临时做一些停机升级操作；</li>
+<li>内网服务如果出现bug，导致消费数据丢失，可以对队列<strong>消息进行回放</strong>实现重新消费；</li>
+<li>Kafka是分区消息同步，消息是顺序的，很少会乱序，可以帮我们实现<strong>顺序同步；</strong></li>
+<li><strong>消息内容可以保存</strong>很久，加入TraceID后查找方便并且透明，利于排查各种问题。</li>
+</ul>
+<h2 id="4-分布式事务"><a href="#4-分布式事务" class="headerlink" title="4. 分布式事务"></a>4. 分布式事务</h2><p><strong>背景</strong>：DDD领域驱动是一种拆分微服务的方式， 服务被拆分得更细，并且都是独立部署，拥有独立的数据库，这就导致要想保持事务一致性实现就更难了，因此跨越多个服务实现分布式事务已成为刚需。  </p>
+<h1 id="第四章-读多写少的系统"><a href="#第四章-读多写少的系统" class="headerlink" title="第四章 读多写少的系统"></a>第四章 读多写少的系统</h1><p><strong>读多写多，第一反应是应该避免这种情况，如果实时性、一致性要求不高，可以有降级、限流、多级缓存等等操作，如果是在不行就只能分片扩容</strong></p>
+<p><strong>用缓存的时候如果想避免网络开销，甚至可以在同一台机器上开一个小的redis</strong></p>
+<h2 id="1-本地缓存"><a href="#1-本地缓存" class="headerlink" title="1. 本地缓存"></a>1. 本地缓存</h2><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/13093c34d9714bb99acd63e638150adf.jpg" alt="img"></p>
+<h2 id="2-业务脚本"><a href="#2-业务脚本" class="headerlink" title="2. 业务脚本"></a>2. 业务脚本</h2><p>我们已经习惯了使用缓存集群对数据做缓存，但是这种常见的内存缓存服务有很多不方便的地方，比如集群会独占大量的内存、不能原子修改缓存的某一个字段、多次通讯有网络损耗。</p>
+<p>很多时候我们获取数据并不需要全部字段，但因为缓存不支持筛选，批量获取数据的场景下性能就会下降很多。这些问题在读多写多的场景下，会更加明显。</p>
+<h3 id="2-1-缓存即服务"><a href="#2-1-缓存即服务" class="headerlink" title="2.1. 缓存即服务"></a>2.1. 缓存即服务</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/b40311c823c940299e5e7f76f92a1057.jpg" alt="img"></p>
+<p>通过缓存预热，把缓存中的数据用脚本处理后再放到本地的Map、Set等，可以对其直接进行操作，避免用的时候再</p>
+<h2 id="3-流量拆分"><a href="#3-流量拆分" class="headerlink" title="3. 流量拆分"></a>3. 流量拆分</h2><p> 一般来说，这种服务多数属于实时互动服务，因为时效性要求很高，导致很多场景下，我们无法用读缓存的方式来降低核心数据的压力。所以，为了降低这类互动服务器的压力，我们可以从架构入手，做一些灵活拆分的设计改造。  </p>
+<h3 id="3-1-可预估用户量的服务"><a href="#3-1-可预估用户量的服务" class="headerlink" title="3.1. 可预估用户量的服务"></a>3.1. 可预估用户量的服务</h3><h3 id="3-2-不可预估用户量的服务"><a href="#3-2-不可预估用户量的服务" class="headerlink" title="3.2. 不可预估用户量的服务"></a>3.2. 不可预估用户量的服务</h3><h4 id="3-2-1-聊天：信息合并"><a href="#3-2-1-聊天：信息合并" class="headerlink" title="3.2.1. 聊天：信息合并"></a>3.2.1. 聊天：信息合并</h4><p>点赞或大量用户输入同样内容的刷屏情境可以合并信息，压缩整理后的聊天内容会被分发到多个聊天内容分发服务器上，直播间内用户的聊天长连接会收到消息更新的推送通知，接着客户端会到指定的<strong>内容分发服务器群组</strong>里<strong>批量拉取数据</strong>，拿到数据后会根据时间顺序来回放。请注意，这个方式只适合用在疯狂刷屏的情况，如果用户量很少可以通过长链接进行实时互动。  </p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/de414acac59f4476993c2c373ce04584.jpg" alt="img"></p>
+<h4 id="3-2-2-答题：瞬时信息拉取高峰"><a href="#3-2-2-答题：瞬时信息拉取高峰" class="headerlink" title="3.2.2. 答题：瞬时信息拉取高峰"></a>3.2.2. 答题：瞬时信息拉取高峰</h4><p>除了交互流量极大的聊天互动信息之外，还有一些特殊的互动，如做题互动。直播间老师发送一个题目，题目消息会广播给所有用户，客户端收到消息后会从服务端拉取题目的数据。</p>
+<p>如果有<strong>10w用户在线</strong>，很有可能导致瞬间有10w人在线同时<strong>请求服务端拉取题目</strong>。这样的数据请求量，需要我们投入大量的服务器和带宽才能承受，不过这么做这个性价比并不高。</p>
+<p>理论上我们可以将数据静态化，并通过CDN阻挡这个流量，但是为了避免出现瞬时的高峰，推荐客户端拉取时加入<strong>随机延迟几秒</strong>，再发送请求，这样可以大大延缓服务器压力，获得更好的用户体验。</p>
+<p>切记对于客户端来说，这种服务如果失败了，就<strong>不要频繁地请求重试</strong>，不然会将服务端打沉。如果必须这样做，那么建议你对<strong>重试的时间做退火算法</strong>，以此保证服务端不会因为一时故障收到大量的请求，导致服务器崩溃。</p>
+<p>如果是教学场景的直播，有两个缓解服务器压力的技巧。第一个技巧是在上课当天，把抢答题目提前交给客户端做<strong>预加载下载</strong>，这样可以减少实时拉取的压力。</p>
+<p>第二个方式是题目<strong>抢答</strong>的情况，老师发布题目的时候，提前<strong>设定发送动作生效后5秒再弹出题目</strong>，这样能让所有直播用户的接收端“准时”地收到题目信息，而不至于出现用户题目接收时间不一致的情况。</p>
+<p>至于非抢答类型的题目，用户回答完题目后，我们可以先在<strong>客户端本地先做预判卷，把正确答案和解析展示给用户，然后在直播期间异步缓慢地提交用户答题结果到服务端</strong>，以此保证服务器不会因用户瞬时的流量被冲垮。</p>
+<h4 id="3-2-3-点赞：服务端树形汇总"><a href="#3-2-3-点赞：服务端树形汇总" class="headerlink" title="3.2.3. 点赞：服务端树形汇总"></a>3.2.3. 点赞：服务端树形汇总</h4><p>一致性要求不高的计数器</p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/e47b4ad847d147c3a7b108c53675899c.jpg" alt="img"></p>
+<p>这个方式可以将用户点赞流量随机压到不同的写缓存服务上，通过第一层写缓存本地的实时汇总来缓解大量用户的请求，将更新数据周期性地汇总后，提交到二级写缓存。</p>
+<p>之后，二级汇总所在分片的所有上层服务数值后，最终汇总同步给核心缓存服务。接着，通过核心缓存把最终结果汇总累加起来。最后通过主从复制到多个子查询节点服务，供用户查询汇总结果。</p>
+<h4 id="3-2-4-打赏-购物：服务端分片及分片实时扩容"><a href="#3-2-4-打赏-购物：服务端分片及分片实时扩容" class="headerlink" title="3.2.4. 打赏&amp;购物：服务端分片及分片实时扩容"></a>3.2.4. 打赏&amp;购物：服务端分片及分片实时扩容</h4><p>具有<strong>强一致性</strong></p>
+<p>因为事务一致性的要求，这种服务我们不能做成多层缓冲方式提供服务，而且这种服务的数据特征是读多写多，所以我们可以通过数据分片方式实现这一类服务  </p>
+<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/9d45a60fdff04d6b8c519a415f76106e.jpg" alt="img"></p>
+<p>分片算法</p>
+<p><strong>一致性哈希：</strong> 一致性哈希让集群扩容变简单，但你很难“挑选”哪些数据去哪个节点，需要额外工具，否则控制起来麻烦。  </p>
+<p><strong>树形热迁移切片法：</strong> 虚拟桶，把数据分片到桶上，然后一个服务器管理几个桶，满足动态扩容要求</p>
+<h3 id="3-3-服务降级：分布式队列汇总缓冲"><a href="#3-3-服务降级：分布式队列汇总缓冲" class="headerlink" title="3.3. 服务降级：分布式队列汇总缓冲"></a>3.3. 服务降级：分布式队列汇总缓冲</h3><p>限流，利用队列将消息合并 牺牲实时性</p>
+<h2 id="4-流量调度：DNS、全站加速及机房负载均衡"><a href="#4-流量调度：DNS、全站加速及机房负载均衡" class="headerlink" title="4. 流量调度：DNS、全站加速及机房负载均衡"></a>4. 流量调度：DNS、全站加速及机房负载均衡</h2><h1 id="第五章-写多读少的系统"><a href="#第五章-写多读少的系统" class="headerlink" title="第五章 写多读少的系统"></a>第五章 写多读少的系统</h1><h2 id="1-稀疏索引"><a href="#1-稀疏索引" class="headerlink" title="1. 稀疏索引"></a>1. 稀疏索引</h2><p>这节课，我们讨论了OLAP和OLTP数据库的索引、存储、数据量以及应用的不同场景。</p>
+<p>OLAP相对于关系数据库的数据存储量会更多，并且对于大量数据批量写入支持很好。很多情况下，高并发批量写数据很常见，其表的字段会更多，数据的存储多数是用列式方式存储，而数据的索引用的则是列索引，通过这些即可实现实时大数据计算结果的查询和分析。</p>
+<p>相对于离线计算来说，这种方式更加快速方便，唯一的缺点在于这类服务都需要多台服务器做分布式，成本高昂。</p>
+<p>可以看出，我们使用的场景不同决定了我们的数据底层如何去做更高效，HTAP的出现，让我们在不同的场景中有了更多的选择，毕竟大数据挖掘是一个很庞大的数据管理体系，如果能有一个轻量级的OLAP，会让我们的业务拥有更多的可能。</p>
+<h1 id="第六章-内网服务设计"><a href="#第六章-内网服务设计" class="headerlink" title="第六章 内网服务设计"></a>第六章 内网服务设计</h1><h2 id="1-统一缓存数据平台"><a href="#1-统一缓存数据平台" class="headerlink" title="1. 统一缓存数据平台"></a>1. 统一缓存数据平台</h2><h3 id="1-1-实体数据主动缓存"><a href="#1-1-实体数据主动缓存" class="headerlink" title="1.1. 实体数据主动缓存"></a>1.1. 实体数据主动缓存</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/21014ee39c9947fda82b402560a366c8.jpg" alt="img"><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/d951708efd3e4c459e3cd1fec3159a60.jpg" alt="img"></p>
+<p>双写：缓存的内容是多个表聚合来的，写通常比删的开销要大</p>
+<p>这个方案服务在写的时候是先更再删，中间件负责监听以及回填缓存（需要写回填的脚本），消息队列保证可靠性</p>
+<h3 id="1-2-L1缓存及热点缓存延期"><a href="#1-2-L1缓存及热点缓存延期" class="headerlink" title="1.2. L1缓存及热点缓存延期"></a>1.2. L1缓存及热点缓存延期</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/ea13e93dd6384fd1859616ae8835df2c.jpg" alt="img"></p>
+<h3 id="1-3-关系数据缓存"><a href="#1-3-关系数据缓存" class="headerlink" title="1.3. 关系数据缓存"></a>1.3. 关系数据缓存</h3><p>为此，我们首先需要<strong>改进消息监听服务</strong>，将它做成Kafka Group Consumer服务，同时实现可动态扩容，这能提升系统的并行数据处理能力，支持更大量的并发修改。</p>
+<p>其次，对于量级更高的数据缓存系统，还可以引入多种数据引擎共同提供不同的数据支撑服务，比如：</p>
+<ul>
+<li>lua脚本引擎（具体可以回顾<a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/608526">第十七节课</a>）是数据推送的“发动机”，能帮我们把数据动态同步到多个数据源；</li>
+<li>Elasticsearch负责提供全文检索功能；</li>
+<li>Pika负责提供大容量KV查询功能；</li>
+<li>ClickHouse负责提供实时查询数据的汇总统计功能；</li>
+<li>MySQL引擎负责支撑新维度的数据查询。</li>
+</ul>
+<h3 id="1-4-多数据引擎平台"><a href="#1-4-多数据引擎平台" class="headerlink" title="1.4. 多数据引擎平台"></a>1.4. 多数据引擎平台</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0/169a7a7fa5df4f3eaedac9d7b1eca1ea.jpg" alt="img"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E5%A4%9A%E5%86%99%E5%B0%91/" rel="tag"># 读多写少</a>
+              <a href="/tags/%E5%BC%BA%E4%B8%80%E8%87%B4%E6%80%A7/" rel="tag"># 强一致性</a>
+              <a href="/tags/%E8%AF%BB%E5%A4%9A%E5%86%99%E5%A4%9A/" rel="tag"># 读多写多</a>
+              <a href="/tags/%E8%AF%BB%E5%B0%91%E5%86%99%E5%A4%9A/" rel="tag"># 读少写多</a>
+              <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag"># 高并发</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/" rel="prev" title="分布式事务笔记">
+      <i class="fa fa-chevron-left"></i> 分布式事务笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/11/07/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第一章 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%88%90%E9%95%BF%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 成长路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%A6%82%E4%BD%95%E5%AE%9E%E8%B7%B5%E9%AB%98%E5%B9%B6%E5%8F%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2. 如何实践高并发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1. 识别系统类型</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%AF%BB%E5%A4%9A%E5%86%99%E5%B0%91%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">第二章 读多写少的系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BB%93%E6%9E%84%E6%A2%B3%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">1. 结构梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%B2%BE%E7%AE%80%E5%AD%97%E6%AE%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1. 精简字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%88%A4%E6%96%AD%E4%B8%8D%E5%90%8C%E7%A7%8D%E7%B1%BB%E7%9A%84%E8%A1%A8%E6%98%AF%E5%90%A6%E9%80%82%E5%90%88%E7%BC%93%E5%AD%98"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2. 判断不同种类的表是否适合缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">2. 缓存一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%B4%E6%97%B6%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1. 临时热点缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2. 缓存更新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E5%8D%95%E4%B8%AA%E5%AE%9E%E4%BD%93%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">2.2.1. 单个实体数据更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%88%96%E8%80%85%E7%BB%9F%E8%AE%A1%E5%9E%8B%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">2.2.2. 关系型或者统计型数据更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Token-%E5%87%8F%E4%BD%8E%E8%BA%AB%E4%BB%BD%E9%89%B4%E6%9D%83%E7%9A%84%E6%B5%81%E9%87%8F%E5%8E%8B%E5%8A%9B"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3. Token 减低身份鉴权的流量压力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%90%8C%E5%9F%8E%E5%8F%8C%E6%B4%BB"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4. 同城双活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E5%A4%9A%E6%9C%BA%E6%88%BF%E4%B8%80%E8%87%B4%E6%80%A7-Raft"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.5. 多机房一致性 Raft</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%BC%BA%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">第三章 强一致性的系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A2%86%E5%9F%9F%E6%8B%86%E5%88%86"><span class="nav-number">3.1.</span> <span class="nav-text">1. 领域拆分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%BC%BA%E4%B8%80%E8%87%B4%E9%94%81"><span class="nav-number">3.2.</span> <span class="nav-text">2. 强一致锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%B3%BB%E7%BB%9F%E9%9A%94%E7%A6%BB"><span class="nav-number">3.3.</span> <span class="nav-text">3. 系统隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%BD%91%E5%85%B3"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.1. 网关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%BD%91%E5%85%B3%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9A%8F%E6%97%B6%E7%86%94%E6%96%AD"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.2. 网关隔离和随时熔断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%87%8F%E5%B0%91%E5%86%85%E7%BD%91API%E4%BA%92%E5%8A%A8"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3. 减少内网API互动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E6%8E%A7%E6%B5%81%E5%92%8C%E7%A6%BB%E7%BA%BF%E5%90%8C%E6%AD%A5"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.4. 分布式队列控流和离线同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.4.</span> <span class="nav-text">4. 分布式事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%AF%BB%E5%A4%9A%E5%86%99%E5%B0%91%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">第四章 读多写少的系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98"><span class="nav-number">4.1.</span> <span class="nav-text">1. 本地缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%9A%E5%8A%A1%E8%84%9A%E6%9C%AC"><span class="nav-number">4.2.</span> <span class="nav-text">2. 业务脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BC%93%E5%AD%98%E5%8D%B3%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.1. 缓存即服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%81%E9%87%8F%E6%8B%86%E5%88%86"><span class="nav-number">4.3.</span> <span class="nav-text">3. 流量拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%8F%AF%E9%A2%84%E4%BC%B0%E7%94%A8%E6%88%B7%E9%87%8F%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.3.1.</span> <span class="nav-text">3.1. 可预估用户量的服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%B8%8D%E5%8F%AF%E9%A2%84%E4%BC%B0%E7%94%A8%E6%88%B7%E9%87%8F%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.3.2.</span> <span class="nav-text">3.2. 不可预估用户量的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E8%81%8A%E5%A4%A9%EF%BC%9A%E4%BF%A1%E6%81%AF%E5%90%88%E5%B9%B6"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">3.2.1. 聊天：信息合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E7%AD%94%E9%A2%98%EF%BC%9A%E7%9E%AC%E6%97%B6%E4%BF%A1%E6%81%AF%E6%8B%89%E5%8F%96%E9%AB%98%E5%B3%B0"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">3.2.2. 答题：瞬时信息拉取高峰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E7%82%B9%E8%B5%9E%EF%BC%9A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A0%91%E5%BD%A2%E6%B1%87%E6%80%BB"><span class="nav-number">4.3.2.3.</span> <span class="nav-text">3.2.3. 点赞：服务端树形汇总</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-%E6%89%93%E8%B5%8F-%E8%B4%AD%E7%89%A9%EF%BC%9A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%88%86%E7%89%87%E5%8F%8A%E5%88%86%E7%89%87%E5%AE%9E%E6%97%B6%E6%89%A9%E5%AE%B9"><span class="nav-number">4.3.2.4.</span> <span class="nav-text">3.2.4. 打赏&amp;购物：服务端分片及分片实时扩容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E6%B1%87%E6%80%BB%E7%BC%93%E5%86%B2"><span class="nav-number">4.3.3.</span> <span class="nav-text">3.3. 服务降级：分布式队列汇总缓冲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%B5%81%E9%87%8F%E8%B0%83%E5%BA%A6%EF%BC%9ADNS%E3%80%81%E5%85%A8%E7%AB%99%E5%8A%A0%E9%80%9F%E5%8F%8A%E6%9C%BA%E6%88%BF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.4.</span> <span class="nav-text">4. 流量调度：DNS、全站加速及机房负载均衡</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%99%E5%A4%9A%E8%AF%BB%E5%B0%91%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">第五章 写多读少的系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95"><span class="nav-number">5.1.</span> <span class="nav-text">1. 稀疏索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">第六章 内网服务设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0"><span class="nav-number">6.1.</span> <span class="nav-text">1. 统一缓存数据平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%9E%E4%BD%93%E6%95%B0%E6%8D%AE%E4%B8%BB%E5%8A%A8%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.1.</span> <span class="nav-text">1.1. 实体数据主动缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-L1%E7%BC%93%E5%AD%98%E5%8F%8A%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98%E5%BB%B6%E6%9C%9F"><span class="nav-number">6.1.2.</span> <span class="nav-text">1.2. L1缓存及热点缓存延期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.3.</span> <span class="nav-text">1.3. 关系数据缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%A4%9A%E6%95%B0%E6%8D%AE%E5%BC%95%E6%93%8E%E5%B9%B3%E5%8F%B0"><span class="nav-number">6.1.4.</span> <span class="nav-text">1.4. 多数据引擎平台</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XL Zhao</p>
+  <div class="site-description" itemprop="description">一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XL Zhao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?zfour";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="zfour";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><!-- hexo injector body_end end --></body>
+</html>
