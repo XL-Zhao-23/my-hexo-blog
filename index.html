@@ -148,7 +148,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xl-zhao-23.com/2025/12/29/git%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="http://xl-zhao-23.com/2026/01/12/N+1%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -162,7 +162,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/12/29/git%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">git 常用命令笔记</a>
+            <a href="/2026/01/12/N+1%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">深入理解 Java 后端的 N+1 问题及优化策略</a>
         </h2>
 
         <div class="post-meta">
@@ -173,7 +173,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-12-29 16:48:00 / 修改时间：16:52:46" itemprop="dateCreated datePublished" datetime="2025-12-29T16:48:00+08:00">2025-12-29</time>
+              <time title="创建时间：2026-01-12 00:00:00 / 修改时间：21:05:13" itemprop="dateCreated datePublished" datetime="2026-01-12T00:00:00+08:00">2026-01-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -181,7 +181,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88/" itemprop="url" rel="index"><span itemprop="name">软件开发工程师</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" itemprop="url" rel="index"><span itemprop="name">技术文章</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">后端开发</span></a>
                 </span>
             </span>
 
@@ -196,32 +200,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="更改上游url"><a href="#更改上游url" class="headerlink" title="更改上游url"></a>更改上游url</h1><p>你想更改 Git 仓库的 <strong>上游（remote）GitHub 地址</strong>，其实就是修改 <code>origin</code> 或其他 remote 指向新的仓库 URL。可以按下面步骤操作：</p>
-<hr>
-<h2 id="1-查看当前-remote"><a href="#1-查看当前-remote" class="headerlink" title="1. 查看当前 remote"></a>1. 查看当前 remote</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>输出示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">origin  https://github.com/旧用户名/旧仓库.git (fetch)</span><br><span class="line">origin  https://github.com/旧用户名/旧仓库.git (push)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="2-修改远程仓库地址"><a href="#2-修改远程仓库地址" class="headerlink" title="2. 修改远程仓库地址"></a>2. 修改远程仓库地址</h2><h3 id="方法-A：直接修改已有-remote（推荐）"><a href="#方法-A：直接修改已有-remote（推荐）" class="headerlink" title="方法 A：直接修改已有 remote（推荐）"></a>方法 A：直接修改已有 remote（推荐）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin https://github.com/新用户名/新仓库.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法-B：先删除再添加"><a href="#方法-B：先删除再添加" class="headerlink" title="方法 B：先删除再添加"></a>方法 B：先删除再添加</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote remove origin</span><br><span class="line">git remote add origin https://github.com/新用户名/新仓库.git</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-验证修改"><a href="#3-验证修改" class="headerlink" title="3. 验证修改"></a>3. 验证修改</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>输出应显示新的 GitHub 地址：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">origin  https://github.com/新用户名/新仓库.git (fetch)</span><br><span class="line">origin  https://github.com/新用户名/新仓库.git (push)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-推送到新仓库"><a href="#4-推送到新仓库" class="headerlink" title="4. 推送到新仓库"></a>4. 推送到新仓库</h2><p>如果你想把本地分支推送到新仓库：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：如果你的分支不是 <code>main</code>，把 <code>main</code> 换成你自己的分支名。</p>
-</blockquote>
+          <p>在 Java 后端开发领域，最臭名昭著且常见的性能瓶颈之一就是 N+1 问题。该问题出现在应用程序执行了 N+1 次数据库查询，而本可以仅通过一次查询就获得相同结果的情况下。过多的数据库访问会导致响应变慢、服务器负载过高，并带来不佳的用户体验。本文将深入探讨 N+1 问题，分析其成因，并讨论 Java 后端工程师可以采用的各种缓解策略和技术。</p>
+<h2 id="理解-N-1-问题"><a href="#理解-N-1-问题" class="headerlink" title="理解 N+1 问题"></a>理解 N+1 问题</h2><h3 id="什么是-N-1-问题？"><a href="#什么是-N-1-问题？" class="headerlink" title="什么是 N+1 问题？"></a>什么是 N+1 问题？</h3><p>N+1 问题发生在应用程序先获取一组对象（例如产品、用户或帖子列表），然后对列表中的每个对象再发起额外的数据库查询以获取相关数据的情况下。例如，假设有一个 Java 应用程序需要显示博客帖子列表及其作者信息。如果应用程序先查询出帖子列表，然后再对每个帖子单独查询作者信息，就会产生 N+1 次查询，其中 N 是帖子数量。这种低效的查询模式会迅速导致大量数据库访问。</p>
+<h2 id="N-1-问题的成因"><a href="#N-1-问题的成因" class="headerlink" title="N+1 问题的成因"></a>N+1 问题的成因</h2><p>造成 N+1 问题的原因有几个：</p>
+<ol>
+<li><p><strong>延迟加载（Lazy Loading）</strong><br>许多 Java ORM（对象关系映射）框架，如 Hibernate，默认使用延迟加载。延迟加载意味着相关数据仅在访问时才从数据库获取。当开发者在集合中的每个对象上访问相关数据时，就可能产生 N+1 次查询。</p>
+</li>
+<li><p><strong>低效查询</strong><br>开发者可能在循环中编写代码来获取相关数据，导致本可以通过一次优化查询完成的操作却产生了多次数据库查询。</p>
+</li>
+<li><p><strong>缺乏批量获取（Batch Fetching）</strong><br>一些 ORM 框架提供批量获取功能，可以一次性获取多个对象的相关数据。开发者常常忽视或误用这一功能，从而增加了数据库访问次数。</p>
+</li>
+</ol>
+<h2 id="缓解-N-1-问题的策略"><a href="#缓解-N-1-问题的策略" class="headerlink" title="缓解 N+1 问题的策略"></a>缓解 N+1 问题的策略</h2><p>为解决 N+1 问题并减少过多的数据库访问，Java 后端工程师可以采用多种策略和最佳实践：</p>
+<ol>
+<li><p><strong>预加载（Eager Loading）</strong><br>提前获取相关数据，减少额外查询的需要。大多数 ORM 框架都提供了机制来指定何时以及如何加载相关数据，从而优化数据库查询。</p>
+</li>
+<li><p><strong>批量获取（Batch Fetching）</strong><br>利用 ORM 框架提供的批量获取功能，一次性批量获取相关数据，而不是逐条获取。这可以显著减少数据库查询次数。</p>
+</li>
+<li><p><strong>DTO 投影（DTO Projections）</strong><br>使用数据传输对象（DTO）投影，只从数据库获取必要的数据。这种方式可以减少获取的数据量，从而加快查询速度。</p>
+</li>
+<li><p><strong>缓存（Caching）</strong><br>实现缓存机制，将频繁访问的数据存储在内存中。缓存可以减少重复的数据库查询，提高响应速度并降低数据库负载。</p>
+</li>
+<li><p><strong>分页与过滤（Pagination and Filtering）</strong><br>通过分页和过滤限制单次查询获取的记录数量。这在处理大数据集时尤为有效。</p>
+</li>
+<li><p><strong>查询优化（Query Optimization）</strong><br>定期审查和优化数据库查询。分析查询执行计划，使用数据库分析工具定位并解决性能瓶颈。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>N+1 问题及过多的数据库访问是 Java 后端开发中常见的性能挑战。通过理解 N+1 问题的成因，并采用有效策略，如预加载、批量获取、DTO 投影、缓存、分页和查询优化，开发者可以显著提升应用性能，确保用户体验流畅并降低服务器负载。解决 N+1 问题不仅仅是优化数据库查询，更是为用户提供高效、可扩展的后端解决方案。</p>
 
       
     </div>
@@ -240,7 +245,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -306,16 +311,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -342,7 +347,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

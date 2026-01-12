@@ -20,51 +20,30 @@
     var CONFIG = {"hostname":"xl-zhao-23.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="第一章 概述高并发系统的三板斧：扩展、缓存、消息队列 分层架构 高并发系统的三个目标：高可用、高性能、高扩展 第二章 核心方法1. 数据库1.1. 池化技术一次数据库查询请求，可能SQL消耗1ms，而建立连接需要4ms，所以池化是有必要的 1.2. 读写分离 依据一些云厂商的 Benchmark 的结果，在 4 核 8G 的机器上运 MySQL 5.7 时，大概可以支撑 500 的 TPS 和 1">
-<meta property="og:type" content="article">
-<meta property="og:title" content="高并发设计40讲笔记">
-<meta property="og:url" content="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/index.html">
+  <meta name="description" content="一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZXL&#39;s Tech Blog">
+<meta property="og:url" content="http://xl-zhao-23.com/page/7/index.html">
 <meta property="og:site_name" content="ZXL&#39;s Tech Blog">
-<meta property="og:description" content="第一章 概述高并发系统的三板斧：扩展、缓存、消息队列 分层架构 高并发系统的三个目标：高可用、高性能、高扩展 第二章 核心方法1. 数据库1.1. 池化技术一次数据库查询请求，可能SQL消耗1ms，而建立连接需要4ms，所以池化是有必要的 1.2. 读写分离 依据一些云厂商的 Benchmark 的结果，在 4 核 8G 的机器上运 MySQL 5.7 时，大概可以支撑 500 的 TPS 和 1">
+<meta property="og:description" content="一个技术博客，主要涉及JAVA后端开发，AI应用开发，技术感悟">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/2dee7e8e227a339f8f3cb6e7b47c0c8d.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/de0a7a65a0bf51e1463d40d666a034ad.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/3b19c4b5e93eeb32fd9665e330e6efaa.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/6e096e287f2c418f663ab201f435a5f6.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/4c43b9c64c6125ad107fd91e4fcc27bc.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/9417a969ce19be3e70841b8d51cf8011.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/897bcb5e27c6492484b625fc06599ff9.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/f98bd80af8a4e7258251db1084e0383e.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/3ee52d302f77bf5e61b244094d754d13.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/ba9e63bbcccd910df41b75b925ad5910.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/7a76b0b7c6e3fc4b60cfcda8dbd93dc9.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/539f9fd7196c3c0b17eba55584d4c6c1.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/ab701c40ed8229606a4bf90db327c2f2.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/833f4c8daea04104dfa5566715642c1b.jpg">
-<meta property="og:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/c2e64231a2b6c52082567f8422069cb0.jpg">
-<meta property="article:published_time" content="2025-09-10T12:04:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T10:14:02.667Z">
 <meta property="article:author" content="XL Zhao">
-<meta property="article:tag" content="信息流系统">
-<meta property="article:tag" content="计数服务">
-<meta property="article:tag" content="高并发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xl-zhao-23.com/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/2dee7e8e227a339f8f3cb6e7b47c0c8d.jpg">
 
-<link rel="canonical" href="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="http://xl-zhao-23.com/page/7/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
-    isPost : true,
+    isHome : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>高并发设计40讲笔记 | ZXL's Tech Blog</title>
+  <title>ZXL's Tech Blog</title>
   
 
 
@@ -163,10 +142,9 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content index posts-expand">
             
-
-    
+      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -182,9 +160,10 @@
       <meta itemprop="name" content="ZXL's Tech Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          高并发设计40讲笔记
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">高并发设计40讲笔记</a>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -223,7 +202,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><p>高并发系统的三板斧：扩展、缓存、消息队列</p>
+          <h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><p>高并发系统的三板斧：扩展、缓存、消息队列</p>
 <p>分层架构</p>
 <p>高并发系统的三个目标：高可用、高性能、高扩展</p>
 <h1 id="第二章-核心方法"><a href="#第二章-核心方法" class="headerlink" title="第二章 核心方法"></a>第二章 核心方法</h1><h2 id="1-数据库"><a href="#1-数据库" class="headerlink" title="1. 数据库"></a>1. 数据库</h2><h3 id="1-1-池化技术"><a href="#1-1-池化技术" class="headerlink" title="1.1. 池化技术"></a>1.1. 池化技术</h3><p>一次数据库查询请求，可能SQL消耗1ms，而建立连接需要4ms，所以池化是有必要的</p>
@@ -393,36 +372,25 @@
 <p>拉模式会有<strong>比较大的聚合成本，缓存节点</strong>也会存在带宽的瓶颈，所以我们可以通过一些权衡策略尽量减少获取数据的大小，以及部署缓存副本的方式来抗并发；</p>
 <p>推拉结合的模式核心是只推送活跃的粉丝用户，需要维护用户的在线状态以及活跃粉丝的列表，所以需要增加多余的空间成本来存储，这个你需要来权衡。</p>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag"># 高并发</a>
-              <a href="/tags/%E8%AE%A1%E6%95%B0%E6%9C%8D%E5%8A%A1/" rel="tag"># 计数服务</a>
-              <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B5%81%E7%B3%BB%E7%BB%9F/" rel="tag"># 信息流系统</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2025/09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/" rel="next" title="分布式事务笔记">
-      分布式事务笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+  </nav>
 
 
 
@@ -474,7 +442,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第一章 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">第二章 核心方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">1. 数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%B1%A0%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1. 池化技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2. 读写分离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">1.3. 分库分表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">2. 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">2.3.</span> <span class="nav-text">3. 消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.1. 基本功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BF%9D%E8%AF%81%E4%B8%80%E6%AC%A1%E6%B6%88%E8%B4%B9"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.2. 保证一次消费</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">3.2.1. 消息丢失</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">3.2.2. 重复消费</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%99%8D%E4%BD%8E%E5%BB%B6%E8%BF%9F"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.3. 降低延迟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%A8%AA%E5%90%91%E6%89%A9%E5%B1%95"><span class="nav-number">2.4.</span> <span class="nav-text">4. 横向扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%B8%80%E4%BD%93%E5%8C%96%E6%9E%B6%E6%9E%84%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-number">2.4.1.</span> <span class="nav-text">4.1. 一体化架构的缺陷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-RPC-%E6%A1%86%E6%9E%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">4.2. RPC 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">4.2.1. IO 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">4.2.2. 序列化方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="nav-number">2.4.3.</span> <span class="nav-text">4.3. 注册中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E5%88%86%E5%B8%83%E5%BC%8Ftrans"><span class="nav-number">2.4.4.</span> <span class="nav-text">4.4. 分布式trans</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%EF%BC%9A%E6%80%8E%E6%A0%B7%E6%8F%90%E5%8D%87%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A8%AA%E5%90%91%E6%89%A9%E5%B1%95%E8%83%BD%E5%8A%9B%EF%BC%9F"><span class="nav-number">2.4.5.</span> <span class="nav-text">4.5. 负载均衡：怎样提升系统的横向扩展能力？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-API%E7%BD%91%E5%85%B3"><span class="nav-number">2.4.6.</span> <span class="nav-text">4.6. API网关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E5%A4%9A%E6%9C%BA%E6%88%BF%E9%83%A8%E7%BD%B2"><span class="nav-number">2.4.7.</span> <span class="nav-text">4.7. 多机房部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-Service-Mesh%EF%BC%9A%E5%A6%82%E4%BD%95%E5%B1%8F%E8%94%BD%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86%E7%BB%86%E8%8A%82"><span class="nav-number">2.4.8.</span> <span class="nav-text">4.8.  Service Mesh：如何屏蔽服务化系统的服务治理细节</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E8%AE%A1%E6%95%B0%E6%9C%8D%E5%8A%A1%E6%A1%88%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">第三章 计数服务案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%9A%E7%94%A8%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">3.1.</span> <span class="nav-text">1. 通用的计数器设计方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%9F%A5%E7%9A%84%E6%9C%AA%E8%AF%BB%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2. 系统通知的未读数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E4%BF%A1%E6%81%AF%E6%B5%81%E7%B3%BB%E7%BB%9F%E6%A1%88%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">第四章 信息流系统案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8E%A8%E6%A8%A1%E5%BC%8F%E5%A6%82%E4%BD%95%E5%81%9A"><span class="nav-number">4.1.</span> <span class="nav-text">1. 推模式如何做</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8B%89%E6%A8%A1%E5%BC%8F%E5%A6%82%E4%BD%95%E5%81%9A"><span class="nav-number">4.2.</span> <span class="nav-text">2. 拉模式如何做</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

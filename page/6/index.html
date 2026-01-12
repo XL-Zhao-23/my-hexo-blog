@@ -148,7 +148,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xl-zhao-23.com/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://xl-zhao-23.com/2025/09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -162,7 +162,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">高并发设计40讲笔记</a>
+            <a href="/2025/09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">分布式事务笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -179,7 +179,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-12-29 18:14:02" itemprop="dateModified" datetime="2025-12-29T18:14:02+08:00">2025-12-29</time>
+                <time title="修改时间：2025-12-29 17:55:36" itemprop="dateModified" datetime="2025-12-29T17:55:36+08:00">2025-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -202,176 +202,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h1><p>高并发系统的三板斧：扩展、缓存、消息队列</p>
-<p>分层架构</p>
-<p>高并发系统的三个目标：高可用、高性能、高扩展</p>
-<h1 id="第二章-核心方法"><a href="#第二章-核心方法" class="headerlink" title="第二章 核心方法"></a>第二章 核心方法</h1><h2 id="1-数据库"><a href="#1-数据库" class="headerlink" title="1. 数据库"></a>1. 数据库</h2><h3 id="1-1-池化技术"><a href="#1-1-池化技术" class="headerlink" title="1.1. 池化技术"></a>1.1. 池化技术</h3><p>一次数据库查询请求，可能SQL消耗1ms，而建立连接需要4ms，所以池化是有必要的</p>
-<h3 id="1-2-读写分离"><a href="#1-2-读写分离" class="headerlink" title="1.2. 读写分离"></a>1.2. 读写分离</h3><p> 依据一些云厂商的 Benchmark 的结果，在 4 核 8G 的机器上运 MySQL 5.7 时，大概可以支撑 500 的 TPS 和 10000 的 QPS。</p>
-<p>tips：</p>
-<p>👉 比如：只测 <code>/getUser?id=1</code>，每次只查一次用户表。</p>
+          <h1 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h1><h2 id="1-基础原理"><a href="#1-基础原理" class="headerlink" title="1. 基础原理"></a>1. 基础原理</h2><h3 id="1-1-CAP理论"><a href="#1-1-CAP理论" class="headerlink" title="1.1. CAP理论"></a>1.1. CAP理论</h3><h3 id="1-2-BASE理论"><a href="#1-2-BASE理论" class="headerlink" title="1.2. BASE理论"></a>1.2. BASE理论</h3><h2 id="2-Seata框架"><a href="#2-Seata框架" class="headerlink" title="2. Seata框架"></a>2. Seata框架</h2><h3 id="2-1-基本架构和解决方案"><a href="#2-1-基本架构和解决方案" class="headerlink" title="2.1. 基本架构和解决方案"></a>2.1. 基本架构和解决方案</h3><p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87.png" alt="img"></p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1756986572218.png" alt="img"></p>
+<h3 id="2-2-配置"><a href="#2-2-配置" class="headerlink" title="2.2. 配置"></a>2.2. 配置</h3><p>**config文件：**seata是微服务架构中的一个服务，可能集群化部署，所以也需要一个服务中心和配置中心，对各个机器的配置文件统一管理。</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596000.png" alt="img"></p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596005.png" alt="img"></p>
+<p>**数据库表：**配置文件中有数据库的配置，seata的功能需要依赖数据库，比如redis或者MySQL，数据库中主要有全局事务表以及分支事务表</p>
+<p><strong>引入微服务依赖：</strong></p>
+<ol>
+<li>注意事务组和集群名称的概念</li>
+<li>nacos 服务名称的组成 <strong>namespace+group+serviceName+cluster</strong></li>
+</ol>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596080.png" alt="img"></p>
+<h2 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3. 解决方案"></a>3. 解决方案</h2><h3 id="3-1-XA模式"><a href="#3-1-XA模式" class="headerlink" title="3.1. XA模式"></a>3.1. XA模式</h3><p>XA又叫两阶段提交，是一种分布式事务的标准，基于数据库本身的事务</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596152.png" alt="img"></p>
+<h4 id="3-1-1-流程"><a href="#3-1-1-流程" class="headerlink" title="3.1.1. 流程"></a>3.1.1. 流程</h4><p><strong>RM 一阶段的工作：</strong><br>- 注册分支事务到TC<br>- 执行分支业务sql但不提交<br>- 报告执行状态到TC<br><strong>TC  二阶段的工作：</strong><br>TC 检测各分支事务执行状态<br>a. 如果都成功，通知所有RM提交事务<br>b. 如果有失败，通知所有RM回滚事务<br><strong>RM 二阶段的工作：</strong><br>接收TC 指令，提交或回滚事务</p>
+<h4 id="3-1-2-优缺点"><a href="#3-1-2-优缺点" class="headerlink" title="3.1.2. 优缺点"></a>3.1.2. 优缺点</h4><p>优点：强一致性、侵入性低</p>
+<p>缺点：长时间不提交事务，如果涉及到了锁，会影响性能</p>
+<h4 id="3-1-3-实现"><a href="#3-1-3-实现" class="headerlink" title="3.1.3. 实现"></a>3.1.3. 实现</h4><p>基于代理模式实现</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596334.png" alt="img"></p>
+<h3 id="3-2-AT-模式"><a href="#3-2-AT-模式" class="headerlink" title="3.2. AT 模式"></a>3.2. AT 模式</h3><p>解决XA的长时间阻塞，思路是 提交+快照恢复</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596424.png" alt="img"></p>
+<h4 id="3-2-1-流程"><a href="#3-2-1-流程" class="headerlink" title="3.2.1. 流程"></a>3.2.1. 流程</h4><p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596427.png" alt="img"></p>
+<p>RM 第一阶段 注册事务到TC，执行并提交事务，生成快照</p>
+<p>TC 第二阶段，检查事务状态，决定提交或回滚</p>
+<p>RM 第二阶段，读取快照恢复数据，或者删除快照</p>
+<h4 id="3-2-2-优缺点"><a href="#3-2-2-优缺点" class="headerlink" title="3.2.2. 优缺点"></a>3.2.2. 优缺点</h4><p>优点：不会长时间阻塞</p>
+<p>缺点：最终一致性 会有脏写问题造成丢失更新</p>
+<p><strong>TC维护一个锁表，使用全局锁完成写隔离，锁粒度比DB锁小，假如其他事务没有在Seata维护，要修改该行数据其他字段，是可以进行的</strong></p>
+<p><strong>如果非seata事务和seata事务对同一个字段进行修改也没问题，因为快照是在更新前后加的，如果检查时发现更新后快照与当前数据库状态不一致，会报警，人工介入</strong></p>
+<h4 id="3-2-3-实现"><a href="#3-2-3-实现" class="headerlink" title="3.2.3. 实现"></a>3.2.3. 实现</h4><p>包含四张表，RM维护undolog表，TC维护全局锁表，以及全局事务表、分支事务表</p>
+<h3 id="3-3-TCC模式"><a href="#3-3-TCC模式" class="headerlink" title="3.3. TCC模式"></a>3.3. TCC模式</h3><p>利用资源预留，不需要加锁，追求性能</p>
+<p>三阶段：try，cancal，confirm</p>
+<h4 id="3-3-1-流程"><a href="#3-3-1-流程" class="headerlink" title="3.3.1. 流程"></a>3.3.1. 流程</h4><p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596507.png" alt="img"></p>
+<h4 id="3-3-2-优缺点"><a href="#3-3-2-优缺点" class="headerlink" title="3.3.2. 优缺点"></a>3.3.2. 优缺点</h4><p>优点：不依赖于事务型数据库，性能高</p>
+<p>缺点：侵入性强，最终一致性，confirm和cancal的幂等性</p>
+<h4 id="3-3-3-实现"><a href="#3-3-3-实现" class="headerlink" title="3.3.3. 实现"></a>3.3.3. 实现</h4><p><strong>空回滚问题</strong></p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596605.png" alt="img"></p>
+<p><strong>业务悬挂问题</strong></p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596641.png" alt="img"></p>
+<p>需要加一个表：冻结表</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596704.png" alt="img"></p>
+<p>防止空回滚：在回滚前判断根据事务id在冻结表中查询，看看有没有该记录，如果没有就插入一条记录（xid，状态为cancel）</p>
+<p>避免业务悬挂：try的时候检查是否存在该事务</p>
+<p><strong>只对扣减金额做了TCC，另外两个下单以及扣减库存，用的是AT模式</strong></p>
+<h3 id="3-4-Saga模式"><a href="#3-4-Saga模式" class="headerlink" title="3.4. Saga模式"></a>3.4. Saga模式</h3><p>用来解决长事务，第一阶段是提交事务，第二个阶段如果失败就执行补偿业务</p>
+<p>有隔离性安全问题风险</p>
+<p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596838.png" alt="img"></p>
+<h3 id="3-5-四种方案对比"><a href="#3-5-四种方案对比" class="headerlink" title="3.5. 四种方案对比"></a>3.5. 四种方案对比</h3><p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996596897.png" alt="img"></p>
+<p>最终一致指的是可能事务持续时间不能确定</p>
+<h3 id="3-6-高可用"><a href="#3-6-高可用" class="headerlink" title="3.6. 高可用"></a>3.6. 高可用</h3><h4 id="3-6-1-高可用集群结构"><a href="#3-6-1-高可用集群结构" class="headerlink" title="3.6.1. 高可用集群结构"></a>3.6.1. 高可用集群结构</h4><p><img src="/.com//09/10/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-1766996597013.png" alt="img"></p>
+<p>nacos支持热更新，当SH挂了，手动改为HZ即可</p>
+<h3 id="3-7-其他分布式事务实现方式"><a href="#3-7-其他分布式事务实现方式" class="headerlink" title="3.7. 其他分布式事务实现方式"></a>3.7. 其他分布式事务实现方式</h3><h4 id="3-7-1-3PC"><a href="#3-7-1-3PC" class="headerlink" title="3.7.1. 3PC"></a>3.7.1. 3PC</h4><p>另外提一句，分布式事务的实现除了2PC外，还有3PC。与2PC相比，3PC主要多了事务超时、多次重复尝试，以及提交check的功能。但因为确认步骤过多，很多业务的互斥排队时间会很长，所以3PC的事务失败率要比2PC高很多。</p>
+<p>为了减少3PC因资源锁定等待超时导致的重复工作，3PC做了预操作，整体流程分成三个阶段：</p>
 <ul>
-<li><p>1 秒钟来了 100 个请求：</p>
-</li>
-<li><ul>
-<li>TPS &#x3D; 100</li>
-<li>QPS &#x3D; 100</li>
+<li><strong>CanCommit阶段</strong>：为了减少因等待锁定数据导致的超时情况，提高事务成功率，事务协调器会发送消息确认资源管理器的资源锁定情况，以及所有子事务的数据库锁定数据的情况。</li>
+<li><strong>PreCommit阶段</strong>：执行2PC的Prepare阶段；</li>
+<li><strong>DoCommit阶段</strong>：执行2PC的Commit阶段。</li>
 </ul>
-</li>
-</ul>
-<p>👉 举例：</p>
-<ul>
-<li><p>一个“查询订单详情”事务会调用 3 个接口：</p>
-</li>
-<li><ul>
-<li><code>/getOrder</code></li>
-<li><code>/getProduct</code></li>
-<li><code>/getLogistics</code></li>
-</ul>
-</li>
-<li><p>这 3 个接口都只查一次表（不会再调用其它接口）。</p>
-</li>
-<li><p>如果 1 秒钟 TPS &#x3D; 100：</p>
-</li>
-<li><ul>
-<li>每个事务 &#x3D; 3 个接口调用 &#x3D; 3 次查询</li>
-<li>QPS &#x3D; 100 × 3 &#x3D; 300</li>
-</ul>
-</li>
-</ul>
-<p>一主多从、读写分离可以分离读写流量，抗住高并发，**那么你可能会说，是不是我无限制地增加从库的数量就可以抵抗大量的并发呢？**实际上并不是的。因为随着从库数量增加，从库连接上来的 IO 线程比较多，主库也需要创建同样多的 log dump 线程来处理复制的请求，对于主库资源消耗比较高，同时受限于主库的网络带宽，所以在实际使用中，一般一个主库最多挂 3～5 个从库。  </p>
-<p>这个问题解决的思路有很多，核心思想就是尽量不去从库中查询信息，纯粹以上面的例子来说，我就有三种解决方案：</p>
-<p>**第一种方案是数据的冗余。**你可以在发送消息队列时不仅仅发送微博 ID，而是发送队列处理机需要的所有微博信息，借此避免从数据库中重新查询数据。</p>
-<p>发微博后，一般要主动将微博id交给mq发给下游，比如推送、推荐、索引，推过去之后，它们再查完整信息，做数据冗余的意思就是，给mq发完整的消息，规避查询。</p>
-<p>**第二种方案是使用缓存。**我可以在同步写数据库的同时，也把微博的数据写入到 Memcached 缓存里面，这样队列处理机在获取微博信息的时候会优先查询缓存，这样也可以保证数据的一致性。</p>
-<p>**最后一种方案是查询主库。**我可以在队列处理机中不查询从库而改为查询主库。不过，这种方式使用起来要慎重，要明确查询的量级不会很大，是在主库的可承受范围之内，否则会对主库造成比较大的压力。</p>
-<h3 id="1-3-分库分表"><a href="#1-3-分库分表" class="headerlink" title="1.3. 分库分表"></a>1.3. 分库分表</h3><p>分片策略：范围分片、hash分片等</p>
-<p>分片键(全局唯一ID): UUID、雪花算法</p>
-<p>UUID无序，写入和生成效率不高</p>
-<p>雪花算法</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/2dee7e8e227a339f8f3cb6e7b47c0c8d.jpg" alt="img"></p>
-<p>时间+机器ID+序号，某个时间点（毫秒）某个进程的第几个</p>
-<p>不同公司也会依据自身业务的特点对 Snowflake 算法做一些改造，比如说减少序列号的位数增加机器 ID 的位数以支持单 IDC 更多的机器，也可以在其中加入业务 ID 字段来区分不同的业务。**比方说我现在使用的发号器的组成规则就是：**1 位兼容位恒为 0 + 41 位时间信息 + 6 位 IDC 信息（支持 64 个 IDC）+ 6 位业务信息（支持 64 个业务）+ 10 位自增信息（每毫秒支持 1024 个号）</p>
-<p>我选择这个组成规则，主要是因为我在单机房只部署一个发号器的节点，并且使用 KeepAlive 保证可用性。业务信息指的是项目中哪个业务模块使用，比如用户模块生成的 ID，内容模块生成的 ID，把它加入进来，一是希望不同业务发出来的 ID 可以不同，二是因为在出现问题时可以反解 ID，知道是哪一个业务发出来的 ID。</p>
-<p>那么了解了 Snowflake 算法的原理之后，我们如何把它工程化，来为业务生成全局唯一的 ID 呢？<strong>一般来说我们会有两种算法的实现方式：</strong></p>
-<p>**一种是嵌入到业务代码里，也就是分布在业务服务器中。**这种方案的好处是业务代码在使用的时候不需要跨网络调用，性能上会好一些，但是就需要更多的机器 ID 位数来支持更多的业务服务器。另外，由于业务服务器的数量很多，我们很难保证机器 ID 的唯一性，所以就需要引入 ZooKeeper 等分布式一致性组件来保证每次机器重启时都能获得唯一的机器 ID。</p>
-<p>**另外一个部署方式是作为独立的服务部署，这也就是我们常说的发号器服务。**业务在使用发号器的时候就需要多一次的网络调用，但是内网的调用对于性能的损耗有限，却可以减少机器 ID 的位数，如果发号器以主备方式部署，同时运行的只有一个发号器，那么机器 ID 可以省略，这样可以留更多的位数给最后的自增信息位。即使需要机器 ID，因为发号器部署实例数有限，那么就可以把机器 ID 写在发号器的配置文件里，这样即可以保证机器 ID 唯一性，也无需引入第三方组件了。<strong>微博和美图都是使用独立服务的方式来部署发号器的，性能上单实例单 CPU 可以达到两万每秒。</strong></p>
-<p>Snowflake 算法设计的非常简单且巧妙，性能上也足够高效，同时也能够生成具有全局唯一性、单调递增性和有业务含义的 ID，但是它也有一些缺点，其中最大的缺点就是它依赖于系统的时间戳，一旦系统时间不准，就有可能生成重复的 ID。所以如果我们发现系统时钟不准，就可以让发号器暂时拒绝发号，直到时钟准确为止。</p>
-<p>另外，如果请求发号器的 QPS 不高，比如说发号器每毫秒只发一个 ID，就会造成生成 ID 的末位永远是 1，那么在分库分表时如果使用 ID 作为分区键就会造成库表分配的不均匀。<strong>这一点，也是我在实际项目中踩过的坑，而解决办法主要有两个：</strong></p>
-<p>\1. 时间戳不记录毫秒而是记录秒，这样在一个时间区间里可以多发出几个号，避免出现分库分表时数据分配不均。</p>
-<p>\2. 生成的序列号的起始号可以做一下随机，这一秒是 21，下一秒是 30，这样就会尽量的均衡了。</p>
-<p>我在开头提到，自己的实际项目中采用的是变种的 Snowflake 算法，也就是说对 Snowflake 算法进行了一定的改造，从上面的内容中你可以看出，这些改造：一是要让算法中的 ID 生成规则符合自己业务的特点；二是为了解决诸如时间回拨等问题。</p>
-<p>其实，大厂除了采取 Snowflake 算法之外，还会选用一些其他的方案，比如滴滴和美团都有提出基于数据库生成 ID 的方案。这些方法根植于公司的业务，同样能解决分布式环境下 ID 全局唯一性的问题。对你而言，可以多角度了解不同的方法，这样能够寻找到更适合自己业务目前场景的解决方案，不过我想说的是，<strong>方案不在多，而在精，方案没有最好，只有最适合，真正弄懂方法背后的原理，并将它落地，才是你最佳的选择。</strong></p>
-<h2 id="2-缓存"><a href="#2-缓存" class="headerlink" title="2. 缓存"></a>2. 缓存</h2><p>静态资源加速：CDN</p>
-<p>1.DNS 技术是 CDN 实现中使用的核心技术，可以将用户的请求映射到 CDN 节点上；</p>
-<p>2.DNS 解析结果需要做本地缓存，降低 DNS 解析过程的响应时间；</p>
-<p>3.GSLB 可以给用户返回一个离着他更近的节点，加快静态资源的访问速度。</p>
-<p>动态资源加速：本地缓存、分布式缓存等</p>
-<p>缓存需要考虑读写策略、高可用、缓存的三大问题、过期策略、一致性问题等等</p>
-<h2 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3. 消息队列"></a>3. 消息队列</h2><h3 id="3-1-基本功能"><a href="#3-1-基本功能" class="headerlink" title="3.1. 基本功能"></a>3.1. 基本功能</h3><p>秒杀中，限流+缓存挡住了读请求，写请求该如何处理？</p>
-<p>分库分表 —&gt; 不经济</p>
-<p>00:00 分秒杀活动准时开始，用户瞬间向电商系统请求生成订单，扣减库存，用户的这些写操作都是不经过缓存直达数据库的。1 秒钟之内，有 1 万个数据库连接同时达到，系统的数据库濒临崩溃，寻找能够应对如此高并发的写请求方案迫在眉睫。这时你想到了消息队列。  </p>
-<p>消息队列 异步、解耦、削峰填谷</p>
-<p><strong>秒杀场景：</strong></p>
-<p><strong>削峰填谷：</strong></p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/de0a7a65a0bf51e1463d40d666a034ad.jpg" alt="img"></p>
-<p>将秒杀请求<strong>暂存在消息队列</strong>中，然后业务服务器会响应用户“<strong>秒杀结果正在计算中</strong>”，释放了系统资源之后再处理其它用户的请求。</p>
-<p>我们会在后台启动若干个队列处理程序，消费消息队列中的消息，再执行校验库存、下单等逻辑。因为只有有限个队列处理线程在执行，所以落入后端数据库上的并发请求是有限的。而请求是可以在消息队列中被短暂地堆积，当<strong>库存被消耗完之后，消息队列中堆积的请求就可以被丢弃</strong>了。</p>
-<p>比如你的秒杀商品有 1000 件，处理一次购买请求的时间是 500ms，那么总共就需要 500s 的时间。这时，你部署 10 个队列处理程序，那么秒杀请求的处理时间就是 50s，也就是说用户需要等待 50s 才可以看到秒杀的结果，这是可以接受的。这时会并发 10 个请求到达数据库，并不会对数据库造成很大的压力。  </p>
-<p><strong>异步</strong></p>
-<p>业务分主次</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/3b19c4b5e93eeb32fd9665e330e6efaa.jpg" alt="img"></p>
-<p><strong>解耦合</strong></p>
-<p>把数据主动推给下游，避免下游调用上游接口，产生依赖关系</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/6e096e287f2c418f663ab201f435a5f6.jpg" alt="img"></p>
-<h3 id="3-2-保证一次消费"><a href="#3-2-保证一次消费" class="headerlink" title="3.2. 保证一次消费"></a>3.2. 保证一次消费</h3><h4 id="3-2-1-消息丢失"><a href="#3-2-1-消息丢失" class="headerlink" title="3.2.1. 消息丢失"></a>3.2.1. 消息丢失</h4><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/4c43b9c64c6125ad107fd91e4fcc27bc.jpg" alt="img"></p>
-<p>生产者重试、消息队列同步刷盘并确认、消费者消费完成回复确认后再更新进度</p>
-<h4 id="3-2-2-重复消费"><a href="#3-2-2-重复消费" class="headerlink" title="3.2.2. 重复消费"></a>3.2.2. 重复消费</h4><p><strong>生产者</strong></p>
-<p>消息队列通过维护生产者最后一条消息的id，判断是否重复发送</p>
-<p>RocketMQ 会为生产者的消息生成一个集群唯一的ID，</p>
-<p> ID 一般是基于 <strong>存储物理偏移量 + Broker 信息</strong> 计算的，能保证在整个集群中唯一  </p>
-<p>区别与key，key是用来建立索引的</p>
-<p><strong>消费者</strong></p>
-<p><strong>全局唯一ID判断</strong>，被消费过的放到数据库。需要事务一致性</p>
-<p><strong>乐观锁</strong></p>
-<h3 id="3-3-降低延迟"><a href="#3-3-降低延迟" class="headerlink" title="3.3. 降低延迟"></a>3.3. 降低延迟</h3><h2 id="4-横向扩展"><a href="#4-横向扩展" class="headerlink" title="4. 横向扩展"></a>4. 横向扩展</h2><h3 id="4-1-一体化架构的缺陷"><a href="#4-1-一体化架构的缺陷" class="headerlink" title="4.1. 一体化架构的缺陷"></a>4.1. 一体化架构的缺陷</h3><p><strong>数据库连接数瓶颈</strong></p>
-<p>数据库的最大连接数设置为 8000，应用服务器部署在虚拟机上，数量大概是 50 个，每个服务器会和数据库建立 30 个连接，但是数据库的连接数，却远远大于 30 * 50 &#x3D; 1500  </p>
-<p> 因为你不仅要支撑来自客户端的外网流量，还要部署单独的应用服务，支撑来自其它部门的内网调用，也要部署队列处理机，处理来自消息队列的消息，这些服务也都是与数据库直接连接的，林林总总加起来，在高峰期的时候，数据库的连接数要接近 3400。  </p>
-<p><strong>抑制研发效率</strong></p>
-<p>为了减少沟通成本，会将大团队分组，每个小组5-7人，每个组负责一个模块。但是组太多了，组与组之间的沟通成本也会增加</p>
-<p><strong>运维复杂</strong></p>
-<p>每次更新，都要重新部署整个项目</p>
-<p><strong>微服务做服务拆分</strong></p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/9417a969ce19be3e70841b8d51cf8011.jpg" alt="img"></p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/897bcb5e27c6492484b625fc06599ff9.jpg" alt="img"></p>
-<p>为了能够指导你更好地进行服务化的拆分，我带你了解了，微服务化拆分的原则，内容比较清晰。在这里，我想延伸一些内容：</p>
-<p>1.“康威定律”提到，设计系统的组织，其产生的设计等同于组织间的沟通结构。通俗一点说，就是你的团队组织结构是什么样的，你的架构就会长成什么样。</p>
-<p>如果你的团队分为服务端开发团队，DBA 团队，运维团队，测试团队，那么你的架构就是一体化的，所有的团队共同为一个大系统负责，团队内成员众多，沟通成本就会很高；而如果你想实现微服务化的架构，**那么你的团队也要按照业务边界拆分，**每一个模块由一个自治的小团队负责，这个小团队里面有开发、测试、运维和 DBA，这样沟通就只发生在这个小团队内部，沟通的成本就会明显降低。</p>
-<p>\2. 微服务化的一个目标是减少研发的成本，其中也包括沟通的成本，所以小团队内部成员不宜过多。</p>
-<p>按照亚马逊 CEO，贝佐斯的“两个披萨”的理论，如果两个披萨不够你的团队吃，那么你的团队就太大了，需要拆分，所以一个小团队包括开发、运维、测试以 6～8 个人为最佳；</p>
-<p>\3. 如果你的团队人数不多，还没有做好微服务化的准备，而你又感觉到研发和部署的成本确实比较高，那么一个折中的方案是，<strong>你可以优先做工程的拆分。</strong></p>
-<h3 id="4-2-RPC-框架"><a href="#4-2-RPC-框架" class="headerlink" title="4.2. RPC 框架"></a>4.2. RPC 框架</h3><p>**来思考这样一个场景：**你的垂直电商系统的 QPS 已经达到了每秒 2 万次，在做了服务化拆分之后，由于我们把业务逻辑，都拆分到了单独部署的服务中，那么假设你在完成一次完整的请求时，需要调用 4～5 次服务，计算下来，RPC 服务需要承载大概每秒 10 万次的请求。那么，你该如何设计 RPC 框架，来承载如此大的请求量呢？你要做的是：</p>
-<p>选择合适的<strong>网络模型</strong>，有针对性地调整网络参数，以优化网络传输性能；</p>
-<p>选择合适的<strong>序列化方式</strong>，以提升封包、解包的性能。</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/f98bd80af8a4e7258251db1084e0383e.jpg" alt="img"></p>
-<h4 id="4-2-1-IO-模型"><a href="#4-2-1-IO-模型" class="headerlink" title="4.2.1. IO 模型"></a>4.2.1. IO 模型</h4><p>要考虑多路复用，以及网络参数优化</p>
-<p>这五种 I&#x2F;O 模型中最被广泛使用的是**多路 I&#x2F;O 复用，**Linux 系统中的 select、epoll 等系统调用都是支持多路 I&#x2F;O 复用模型的，Java 中的高性能网络框架 Netty 默认也是使用这种模型。所以，我们可以选择它。</p>
-<p>那么，选择好了一种高性能的 I&#x2F;O 模型，是不是就能实现，数据在网络上的高效传输呢？其实并没有那么简单，网络性能的调优涉及很多方面，<strong>其中不可忽视的一项就是网络参数的调优，</strong></p>
-<p>**在之前的项目中，**我的团队曾经写过一个简单的 RPC 通信框架。在进行测试的时候发现，远程调用一个空业务逻辑的方法时，平均响应时间居然可以到几十毫秒，这明显不符合我们的预期，在我们看来，运行一个空的方法，应该在 1 毫秒之内可以返回。于是，我先在测试的时候使用 tcpdump 抓了包，发现一次请求的 Ack 包竟然要经过 40ms 才返回。在网上 google 了一下原因，发现原因和一个叫做 tcp_nodelay 的参数有关。<strong>这个参数是什么作用呢？<strong>如果是连续的小数据包，大小没有一个</strong>最大分段大小，并且还没有收到之前发送的数据包的 Ack 信息，那么这些小数据包就会在发送端暂存起来，直到小数据包累积到一个 MSS，或者收到一个 Ack 为止。</strong></p>
-<h4 id="4-2-2-序列化方式"><a href="#4-2-2-序列化方式" class="headerlink" title="4.2.2. 序列化方式"></a>4.2.2. 序列化方式</h4><h3 id="4-3-注册中心"><a href="#4-3-注册中心" class="headerlink" title="4.3. 注册中心"></a>4.3. 注册中心</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/3ee52d302f77bf5e61b244094d754d13.jpg" alt="img"></p>
-<h3 id="4-4-分布式trans"><a href="#4-4-分布式trans" class="headerlink" title="4.4. 分布式trans"></a>4.4. 分布式trans</h3><p>AOP（用静态代理的方式）+日志的方式记录轨迹</p>
-<p>transid一般就用requestid，spanid记录调用顺序</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/ba9e63bbcccd910df41b75b925ad5910.jpg" alt="img"></p>
-<h3 id="4-5-负载均衡：怎样提升系统的横向扩展能力？"><a href="#4-5-负载均衡：怎样提升系统的横向扩展能力？" class="headerlink" title="4.5. 负载均衡：怎样提升系统的横向扩展能力？"></a>4.5. 负载均衡：怎样提升系统的横向扩展能力？</h3><p><strong>代理类的负载均衡</strong></p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/7a76b0b7c6e3fc4b60cfcda8dbd93dc9.jpg" alt="img"></p>
-<p>对于微服务，用的是RPC协议，无法利用Nginx做服务消费者的负载均衡</p>
-<p><strong>客户端的负载均衡</strong></p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/539f9fd7196c3c0b17eba55584d4c6c1.jpg" alt="img"></p>
-<p><strong>负载均衡策略</strong></p>
-<p>静态(轮询)、动态（加权重）</p>
-<p>Dubbo 提供的 LeastAcive 策略，就是优先选择活跃连接数最少的服务；</p>
-<p>Spring Cloud 全家桶中的 Ribbon 提供了 WeightedResponseTimeRule 是使用响应时间，给每个服务节点计算一个权重，然后依据这个权重，来给调用方分配服务节点。</p>
-<h3 id="4-6-API网关"><a href="#4-6-API网关" class="headerlink" title="4.6. API网关"></a>4.6. API网关</h3><p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/ab701c40ed8229606a4bf90db327c2f2.jpg" alt="img"></p>
-<p>外网网关控制流量： 协议转换、安全策略、认证、限流、熔断  </p>
-<p>内网网关做业务控制</p>
-<h3 id="4-7-多机房部署"><a href="#4-7-多机房部署" class="headerlink" title="4.7. 多机房部署"></a>4.7. 多机房部署</h3><h3 id="4-8-Service-Mesh：如何屏蔽服务化系统的服务治理细节"><a href="#4-8-Service-Mesh：如何屏蔽服务化系统的服务治理细节" class="headerlink" title="4.8.  Service Mesh：如何屏蔽服务化系统的服务治理细节"></a>4.8.  Service Mesh：如何屏蔽服务化系统的服务治理细节</h3><p>解决跨语言场景中，服务治理策略复用的问题</p>
-<p>经历了这几环之后，你的垂直电商系统基本上，已经完成了微服务化拆分的改造。不过，目前来看，你的系统使用的语言还是以 Java 为主，之前提到的服务治理的策略，和服务之间通信协议也是使用 Java 语言来实现的。</p>
-<p>**那么这会存在一个问题：**一旦你的团队中，有若干个小团队开始尝试使用 Go 或者 PHP，来开发新的微服务，那么在微服务化过程中，一定会受到挑战。</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/833f4c8daea04104dfa5566715642c1b.jpg" alt="img"></p>
-<p>直连方式和边车代理模式</p>
-<p>1.Service Mesh 分为数据平面和控制平面。数据平面主要负责数据的传输；控制平面用来控制服务治理策略的植入。出于性能的考虑，一般会把服务治理策略植入到数据平面中，控制平面负责服务治理策略数据的下发。</p>
-<p>2.Sidecar 的植入方式目前主要有两种实现方式，一种是使用 iptables 实现流量的劫持；另一种是通过轻量级客户端来实现流量转发。</p>
-<h1 id="第三章-计数服务案例"><a href="#第三章-计数服务案例" class="headerlink" title="第三章 计数服务案例"></a>第三章 计数服务案例</h1><h2 id="1-通用的计数器设计方案"><a href="#1-通用的计数器设计方案" class="headerlink" title="1. 通用的计数器设计方案"></a>1. 通用的计数器设计方案</h2><p>1对1的计数</p>
-<p>微博的评论数、点赞数、转发数、浏览数、表态数等等；</p>
-<p>用户的粉丝数、关注数、发布微博数、私信数等等。</p>
-<p>数据量巨大  </p>
-<p>访问量大，对于性能的要求高 </p>
-<p>对于可用性、数字的准确性要求高  </p>
-<h2 id="2-系统通知的未读数"><a href="#2-系统通知的未读数" class="headerlink" title="2. 系统通知的未读数"></a>2. 系统通知的未读数</h2><p> 在系统通知未读、全量用户打点等存在有限的共享存储的场景下，可以通过记录用户上次操作的时间或者偏移量，来实现未读方案；  </p>
-<h1 id="第四章-信息流系统案例"><a href="#第四章-信息流系统案例" class="headerlink" title="第四章 信息流系统案例"></a>第四章 信息流系统案例</h1><h2 id="1-推模式如何做"><a href="#1-推模式如何做" class="headerlink" title="1. 推模式如何做"></a>1. 推模式如何做</h2><p><strong>写多读少</strong></p>
-<p>基本做法</p>
-<p>假如用户 A 有三个粉丝 B、C、D，如果用 SQL 表示 A 发布一条微博时系统做的事情，那么就像下面展示的这个样子：</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">insert into outbox(userId, feedId, create_time) <span class="keyword">values</span>(<span class="string">&quot;A&quot;</span>, <span class="variable">$feedId</span>, <span class="variable">$current_time</span>); <span class="regexp">//</span> 写入 A 的发件箱</span><br><span class="line"></span><br><span class="line">insert into inbox(userId, feedId, create_time) <span class="keyword">values</span>(<span class="string">&quot;B&quot;</span>, <span class="variable">$feedId</span>, <span class="variable">$current_time</span>); <span class="regexp">//</span> 写入 B 的收件箱</span><br><span class="line"></span><br><span class="line">insert into inbox(userId, feedId, create_time) <span class="keyword">values</span>(<span class="string">&quot;C&quot;</span>, <span class="variable">$feedId</span>, <span class="variable">$current_time</span>); <span class="regexp">//</span> 写入 C 的收件箱</span><br><span class="line"></span><br><span class="line">insert into inbox(userId, feedId, create_time) <span class="keyword">values</span>(<span class="string">&quot;D&quot;</span>, <span class="variable">$feedId</span>, <span class="variable">$current_time</span>); <span class="regexp">//</span> 写入 D 的收件箱</span><br></pre></td></tr></table></figure>
-
-<p>当我们要查询 B 的信息流时，只需要执行下面这条 SQL 就可以了：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> feedId <span class="keyword">from</span> inbox <span class="keyword">where</span> userId = <span class="string">&quot;B&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>改进</p>
-<p><img src="/.com//09/10/%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A140%E8%AE%B2%E7%AC%94%E8%AE%B0/c2e64231a2b6c52082567f8422069cb0.jpg" alt="img"></p>
-<p>写入效率比较高的数据库，压缩率比较高的数据库 TokuDB  </p>
-<p>推模式就是在用户发送微博时，主动将微博写入到他的粉丝的收件箱中；</p>
-<p>推送信息是否延迟、存储的成本、方案的可扩展性以及针对取消关注和微博删除的特殊处理是推模式的主要问题；</p>
-<p>推模式比较适合粉丝数有限的场景。</p>
-<h2 id="2-拉模式如何做"><a href="#2-拉模式如何做" class="headerlink" title="2. 拉模式如何做"></a>2. 拉模式如何做</h2><p><strong>读的时候有聚合操作，写的压力小一些</strong></p>
-<p>假设用户 A 关注了用户 B、C、D，那么当用户 B 发送一条微博的时候，他会执行这样的操作：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert into</span> outbox(userId, feedId, create_time) <span class="keyword">values</span>(&quot;B&quot;, $feedId, $<span class="built_in">current_time</span>); <span class="operator">/</span><span class="operator">/</span> 写入 B 的发件箱</span><br></pre></td></tr></table></figure>
-
-<p>当用户 A 想要获取他的信息流的时候，就要聚合 B、C、D 三个用户收件箱的内容了：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> feedId <span class="keyword">from</span> outbox <span class="keyword">where</span> userId <span class="keyword">in</span> (<span class="keyword">select</span> userId <span class="keyword">from</span> follower <span class="keyword">where</span> fanId <span class="operator">=</span> &quot;A&quot;) <span class="keyword">order</span> <span class="keyword">by</span> create_time</span><br></pre></td></tr></table></figure>
-
-<p>在拉模式下，我们只需要保存用户的发件箱，用户的信息流是通过聚合关注者发件箱数据来实现的；</p>
-<p>拉模式会有<strong>比较大的聚合成本，缓存节点</strong>也会存在带宽的瓶颈，所以我们可以通过一些权衡策略尽量减少获取数据的大小，以及部署缓存副本的方式来抗并发；</p>
-<p>推拉结合的模式核心是只推送活跃的粉丝用户，需要维护用户的在线状态以及活跃粉丝的列表，所以需要增加多余的空间成本来存储，这个你需要来权衡。</p>
-
+<p>总体来说，3PC步骤过多，过程比较复杂，整体执行也更加缓慢，所以在分布式生产环境中很少用到它，这里我就不再过多展开了。</p>
+<h4 id="3-7-2-本地事务表"><a href="#3-7-2-本地事务表" class="headerlink" title="3.7.2. 本地事务表"></a>3.7.2. 本地事务表</h4><h4 id="3-7-3-RocketMQ-半消息"><a href="#3-7-3-RocketMQ-半消息" class="headerlink" title="3.7.3. RocketMQ 半消息"></a>3.7.3. RocketMQ 半消息</h4>
       
     </div>
 
@@ -389,7 +279,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -455,16 +345,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -491,7 +381,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
